@@ -9,7 +9,7 @@
 
 /* Includes */ 
 #include "typedefs.h"
-#include <stdio.h>
+#include "print.h"
 #include "tasks.h"
 
 /* Prototypes */
@@ -41,6 +41,6 @@ void gvPrinter_Body(uint16_t uwCallRateMs)
 	{
 		suwTimerMs = 0u;
 		
-		printf("Task 1.\n");
+		gvPrint("Task 1.\n");
 	}
 }

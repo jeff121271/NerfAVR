@@ -10,7 +10,7 @@
 
 /* Includes */
 #include "typedefs.h"
-#include <stdio.h>
+#include "print.h"
 #include "os_main.h"
 
 /* Prototypes */
@@ -34,10 +34,10 @@ int32_t main(void);
  */
 int32_t main(void)
 {
-	printf("Entering main.\n");
+	gvPrint("Entering main.\n");
 	
     /* Enter OS */
     gvOS_enter();
 	
-	printf("Exiting now.\n");
+	gvPrint("Exiting now.\n");
 }

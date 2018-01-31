@@ -14,8 +14,6 @@
 #include "timer.h"
 #include "os_main.h"
 
-#include <stdio.h>
-
 /* Prototypes */
 void gvOS_enter(void);
 static void vOS_initTasks(void);
