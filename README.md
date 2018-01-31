@@ -1,5 +1,5 @@
 # NerfAVR
-Guarantee this won't be useful to you.
+Guarantee this won't be useful to you if you've just stumbled upon this page.
 
 This is part of a small project involving a nerf gun.
 I took it as an excuse to try and write a simple task scheduler with limited resources.

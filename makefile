@@ -1,20 +1,32 @@
-program: main.o os_main.o tasks.o timer.o print.o
-	gcc ./obj/main.o ./obj/os_main.o ./obj/tasks.o ./obj/timer.o ./obj/print.o -o program
+# Target options:
+#	- 'windows'
+#	- 'AT4313'
+TARGET = 'windows'
 
-main.o: ./src/general/main.c
+# Overall
+program: General OS HAL
+	gcc ./obj/main.o ./obj/os_main.o ./obj/tasks.o \
+		./obj/print.o ./obj/timer.o \
+		-o program
+
+# General
+General: ./src/general/main.c
 	gcc -c ./src/general/main.c -I./src/general -I./src/os -I./src/hal/windows -o ./obj/main.o
-	
-os_main.o: ./src/os/os_main.c ./src/os/os_main.h
-	gcc -c ./src/os/os_main.c -I./src/general -I./src/os -I./src/hal/windows -o ./obj/os_main.o
 
-tasks.o: ./src/os/tasks.c
+# OS Components
+OS: ./src/os/os_main.c ./src/os/tasks.c
+	gcc -c ./src/os/os_main.c -I./src/general -I./src/os -I./src/hal/windows -o ./obj/os_main.o
 	gcc -c ./src/os/tasks.c -I./src/general -I./src/os -I./src/hal/windows -o ./obj/tasks.o
 
-timer.o: ./src/hal/windows/timer.c
+# HAL Components
+HAL:
+ifeq ($(TARGET), 'windows')
 	gcc -c ./src/hal/windows/timer.c -I./src/general -I./src/hal/windows -o ./obj/timer.o
-
-print.o: ./src/hal/windows/print.c
 	gcc -c ./src/hal/windows/print.c -I./src/general -I./src/hal/windows -o ./obj/print.o
+else
+	gcc -c ./src/hal/AT4313/timer.c -I./src/general -I./src/hal/windows -o ./obj/timer.o
+	gcc -c ./src/hal/AT4313/print.c -I./src/general -I./src/hal/windows -o ./obj/print.o
+endif
 	
 clean:
 	rm ./obj/*
