@@ -28,7 +28,7 @@ int32_t main(void);
  *  Parameters:
  *      N/A
  *
- *  Return:
+ *  Returns:
  *      If this function returns, we're in trouble.
  *
  */

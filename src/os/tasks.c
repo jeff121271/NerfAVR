@@ -18,15 +18,16 @@ void gvPrinter_Body(uint16_t uwCallRateMs);
 /* Local Variables */
 
 /**
- *	void gvPrinter_Body(uint8_t ubCallRateMs)
+ *	void gvPrinter_Body(uint16_t uwCallRateMs)
  *
  *	Description:
  *		Body of printer task.  Prints stuff.
+ *		This is a pointless demo function.
  *
  *	Parameters:
  *		ulCallRateMs = Call rate, in ms
  *
- *	Return:
+ *	Returns:
  *		N/A
  *
  */

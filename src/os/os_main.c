@@ -33,7 +33,7 @@ static os_task_t xTaskPool[OS_NUM_TASKS];
  *  Parameters:
  *      N/A
  *
- *  Return:
+ *  Returns:
  *      N/A
  *
  */
@@ -87,12 +87,14 @@ void gvOS_enter(void)
  *	static void vOS_initTasks(void)
  *
  *	Description:
- *		Initializes all tasks.
+ *		Initializes all tasks.  Value of uwTicks should be
+ *		staggered to prevent tasks from having to execute
+ *		in the same 1ms period.
  *
  *	Parameters:
  *		N/A
  *
- *	Return:
+ *	Returns:
  *		N/A
  *
  */
@@ -100,13 +102,13 @@ static void vOS_initTasks(void)
 {
 	/* Printer task */
 	xTaskPool[OS_TASK_PRINTER].uwRateMs = 10u;
-	xTaskPool[OS_TASK_PRINTER].uwTicks = 10u;
+	xTaskPool[OS_TASK_PRINTER].uwTicks = 2u;
 	xTaskPool[OS_TASK_PRINTER].pvInitFunction = NULL_PTR;
 	xTaskPool[OS_TASK_PRINTER].pvStepFunction = &gvPrinter_Body;
 	
 	/* Other printer task */
-	xTaskPool[OS_TASK_2].uwRateMs = 5u;
-	xTaskPool[OS_TASK_2].uwTicks = 10u;
+	xTaskPool[OS_TASK_2].uwRateMs = 10u;
+	xTaskPool[OS_TASK_2].uwTicks = 1u;
 	xTaskPool[OS_TASK_2].pvInitFunction = NULL_PTR;
 	xTaskPool[OS_TASK_2].pvStepFunction = NULL_PTR;
 }
