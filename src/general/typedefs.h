@@ -12,17 +12,18 @@
 #define TYPEDEFS_H
 
 /* Defines */
+#define TRUE 1u
+#define FALSE 0u
 #define NULL 0u
 #define NULL_PTR ((void *)0u)
 
-// todo: Fix these up later; make sure they match hardware/compiler definitions
 typedef long int32_t;
 typedef unsigned long uint32_t;
 typedef int int16_t;
 typedef unsigned int uint16_t;
 typedef char int8_t;
 typedef unsigned char uint8_t;
-
+typedef unsigned char boolean;
 // todo: Check later if this ever really gets used
 typedef union nibbles
 {
