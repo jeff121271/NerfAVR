@@ -6,7 +6,7 @@ TARGET = 'windows'
 # Overall
 program: General OS HAL
 	gcc ./obj/main.o ./obj/os_main.o ./obj/tasks.o \
-		./obj/print.o ./obj/timer.o \
+		./obj/print.o ./obj/timer.o ./obj/clock.o \
 		-o program
 
 # General
@@ -23,9 +23,11 @@ HAL:
 ifeq ($(TARGET), 'windows')
 	gcc -c ./src/hal/windows/timer.c -I./src/general -I./src/hal/windows -o ./obj/timer.o
 	gcc -c ./src/hal/windows/print.c -I./src/general -I./src/hal/windows -o ./obj/print.o
+	gcc -c ./src/hal/windows/clock.c -I./src/general -I./src/hal/windows -o ./obj/clock.o
 else
-	gcc -c ./src/hal/AT4313/timer.c -I./src/general -I./src/hal/windows -o ./obj/timer.o
-	gcc -c ./src/hal/AT4313/print.c -I./src/general -I./src/hal/windows -o ./obj/print.o
+	gcc -c ./src/hal/AT4313/timer.c -I./src/general -I./src/hal/AT4313 -o ./obj/timer.o
+	gcc -c ./src/hal/AT4313/print.c -I./src/general -I./src/hal/AT4313 -o ./obj/print.o
+	gcc -c ./src/hal/AT4313/clock.c -I./src/general -I./src/hal/AT4313 -o ./obj/clock.o
 endif
 	
 clean:
