@@ -14,12 +14,12 @@
 #include "os_main.h"
 
 /* Prototypes */
-int32_t main(void);
+int16_t main(void);
 
 /* Local Variables */
 
 /**
- *  int32_t main(void)
+ *  int16_t main(void)
  *
  *  Description:
  *      Entry point of the program.  Initializes hardware and such
@@ -32,12 +32,15 @@ int32_t main(void);
  *      If this function returns, we're in trouble.
  *
  */
-int32_t main(void)
+int16_t main(void)
 {
+    /* Print debug statement */
 	gvPrint("Entering main.\n");
-	
+
     /* Enter OS */
     gvOS_enter();
 	
-	gvPrint("Exiting now.\n");
+    gvPrint("Exiting now.\n");
+
+	return 1;
 }
