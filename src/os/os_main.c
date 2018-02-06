@@ -1,4 +1,4 @@
-/*
+/**
  *  os_main.c
  *
  *  Main file of a primitive OS I decided to make.

@@ -36,14 +36,16 @@ SUBDIRS :=  \
 ../src \
 ../src/general \
 ../src/hal \
+../src/hal/AT4313 \
 ../src/os
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../src/general/main.c \
-../src/hal/print.c \
-../src/hal/timer.c \
+../src/hal/AT4313/clock.c \
+../src/hal/AT4313/print.c \
+../src/hal/AT4313/timer.c \
 ../src/os/os_main.c \
 ../src/os/tasks.c
 
@@ -56,29 +58,33 @@ ASM_SRCS +=
 
 OBJS +=  \
 src/general/main.o \
-src/hal/print.o \
-src/hal/timer.o \
+src/hal/AT4313/clock.o \
+src/hal/AT4313/print.o \
+src/hal/AT4313/timer.o \
 src/os/os_main.o \
 src/os/tasks.o
 
 OBJS_AS_ARGS +=  \
 src/general/main.o \
-src/hal/print.o \
-src/hal/timer.o \
+src/hal/AT4313/clock.o \
+src/hal/AT4313/print.o \
+src/hal/AT4313/timer.o \
 src/os/os_main.o \
 src/os/tasks.o
 
 C_DEPS +=  \
 src/general/main.d \
-src/hal/print.d \
-src/hal/timer.d \
+src/hal/AT4313/clock.d \
+src/hal/AT4313/print.d \
+src/hal/AT4313/timer.d \
 src/os/os_main.d \
 src/os/tasks.d
 
 C_DEPS_AS_ARGS +=  \
 src/general/main.d \
-src/hal/print.d \
-src/hal/timer.d \
+src/hal/AT4313/clock.d \
+src/hal/AT4313/print.d \
+src/hal/AT4313/timer.d \
 src/os/os_main.d \
 src/os/tasks.d
 
@@ -107,24 +113,26 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
 src/general/%.o: ../src/general/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)D:\Programs\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\include" -I"../src/general" -I"../src/hal" -I"../src/os"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=attiny4313 -B "D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\gcc\dev\attiny4313" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Programs\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\include" -I"../src/general" -I"../src/os" -I"../src/hal/AT4313"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=attiny4313 -B "D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\gcc\dev\attiny4313" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-src/hal/%.o: ../src/hal/%.c
+src/hal/AT4313/%.o: ../src/hal/AT4313/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)D:\Programs\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\include" -I"../src/general" -I"../src/hal" -I"../src/os"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=attiny4313 -B "D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\gcc\dev\attiny4313" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Programs\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\include" -I"../src/general" -I"../src/os" -I"../src/hal/AT4313"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=attiny4313 -B "D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\gcc\dev\attiny4313" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/os/%.o: ../src/os/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)D:\Programs\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\include" -I"../src/general" -I"../src/hal" -I"../src/os"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=attiny4313 -B "D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\gcc\dev\attiny4313" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)D:\Programs\Atmel\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\include" -I"../src/general" -I"../src/os" -I"../src/hal/AT4313"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=attiny4313 -B "D:\Programs\Atmel\7.0\Packs\atmel\ATtiny_DFP\1.3.147\gcc\dev\attiny4313" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

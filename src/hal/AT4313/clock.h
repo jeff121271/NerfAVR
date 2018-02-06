@@ -28,6 +28,6 @@
 #define CLOCK_SEL_INT_128KHZ 0x6u
 
 /* Global Functions */
-void gvClock_init(void);
+extern void gvClock_init(void);
 
 #endif /* #ifndef CLOCK_H */

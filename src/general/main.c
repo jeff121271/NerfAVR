@@ -15,6 +15,7 @@
 
 /* Prototypes */
 int16_t main(void);
+static void vInitHardware(void);
 
 /* Local Variables */
 
@@ -37,10 +38,32 @@ int16_t main(void)
     /* Print debug statement */
 	gvPrint("Entering main.\n");
 
+    /* Initialize hardware */
+    vInitHardware();
+
     /* Enter OS */
     gvOS_enter();
 	
     gvPrint("Exiting now.\n");
 
 	return 1;
+}
+
+/**
+ *  static void vInitHardware(void)
+ *
+ *  Description:
+ *      Initializes the hardware.
+ *
+ *  Parameters:
+ *      N/A
+ *
+ *  Returns:
+ *      N/A
+ *                                                                     
+ */
+static void vInitHardware(void)
+{
+    /* Initialize clock */
+    gvClock_init();
 }
