@@ -10,14 +10,10 @@ out for the actual implementation.
 
 Project structure:
 
-src
-  general
-    Contains main.c and any files that don't fit into a specific slot.
-  drivers
-    Contains driver definitions.  Or will, anyway.
-  hal
-    Hardware abstraction layer.  Will be used for things like register
-    manipulation.
-  os
-    "Operating System", in very dubious quotes.  Defines a very primitive
-    scheduler of sorts that I'm looking for an excuse to use.
+general: Contains main.c and any files that don't fit into a specific slot.
+  
+drivers: Contains driver definitions.  Or will, anyway.
+  
+hal: Hardware abstraction layer.  Will be used for things like register manipulation.
+  
+os: "Operating System", in very dubious quotes.  Defines a very primitive scheduler of sorts that I'm looking for an excuse to use.
