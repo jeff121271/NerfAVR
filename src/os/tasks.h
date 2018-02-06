@@ -1,10 +1,10 @@
 /**
- *	tasks.h
+ *  tasks.h
  *
- *	Interface file for tasks.c.
+ *  Interface file for tasks.c.
  *
- *	Jeff Campbell
- * 	1/31/18
+ *  Jeff Campbell
+ *  1/31/18
  */
  
 #ifndef TASKS_H

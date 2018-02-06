@@ -16,18 +16,18 @@
 /* Enumeration of task IDs */
 typedef enum os_task_id
 {
-	OS_TASK_PRINTER = 0u,	/* < Task 1 */
-	OS_TASK_2,
-	OS_NUM_TASKS,			/* < Number of tasks */
+    OS_TASK_PRINTER = 0u,   /* < Task 1 */
+    OS_TASK_2,
+    OS_NUM_TASKS,           /* < Number of tasks */
 } os_task_id_t;
 
 /* Typedef for OS Task structure */
 typedef struct os_task
 {
-	uint16_t uwRateMs;								/* < Call rate in ms */
-	uint16_t uwTicks;								/* < Ticks until call time */
-	void (*pvInitFunction)(void);					/* < Init function of task */
-	void (*pvStepFunction)(uint16_t uwCallRateMs);	/* < Body of task */
+    uint16_t uwRateMs;                                /* < Call rate in ms */
+    uint16_t uwTicks;                                /* < Ticks until call time */
+    void (*pvInitFunction)(void);                    /* < Init function of task */
+    void (*pvStepFunction)(uint16_t uwCallRateMs);    /* < Body of task */
 } os_task_t;
 
 /* Global functions */
