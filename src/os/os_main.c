@@ -13,6 +13,7 @@
 #include "null.h"
 #include "tasks.h"
 #include "timer.h"
+#include "display_driver.h"
 #include "os_main.h"
 
 /* Prototypes */
@@ -99,5 +100,9 @@ void gvOS_enter(void)
  */
 static void vOS_initTasks(void)
 {
-
+	/* Configure display driver task */
+	xTaskPool[OS_TASK_DISPLAY].uwRateMs = 10u;
+	xTaskPool[OS_TASK_DISPLAY].uwTicks = 10u;
+	xTaskPool[OS_TASK_DISPLAY].pvInitFunction = NULL_PTR;
+	xTaskPool[OS_TASK_DISPLAY].pvStepFunction = &gvDisplay_process;
 }
