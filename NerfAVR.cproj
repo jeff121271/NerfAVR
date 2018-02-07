@@ -137,19 +137,10 @@
     <Compile Include="src\general\null.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\general\typedefs.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\hal\AT4313\clock.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hal\AT4313\clock.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\hal\AT4313\print.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\hal\AT4313\print.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hal\AT4313\timer.c">

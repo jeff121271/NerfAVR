@@ -99,15 +99,5 @@ void gvOS_enter(void)
  */
 static void vOS_initTasks(void)
 {
-    /* Printer task */
-    xTaskPool[OS_TASK_PRINTER].uwRateMs = 10u;
-    xTaskPool[OS_TASK_PRINTER].uwTicks = 2u;
-    xTaskPool[OS_TASK_PRINTER].pvInitFunction = NULL_PTR;
-    xTaskPool[OS_TASK_PRINTER].pvStepFunction = &gvPrinter_Body;
-    
-    /* Other printer task */
-    xTaskPool[OS_TASK_2].uwRateMs = 10u;
-    xTaskPool[OS_TASK_2].uwTicks = 1u;
-    xTaskPool[OS_TASK_2].pvInitFunction = NULL_PTR;
-    xTaskPool[OS_TASK_2].pvStepFunction = NULL_PTR;
+
 }

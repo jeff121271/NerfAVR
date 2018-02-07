@@ -10,7 +10,6 @@
 
 /* Includes */
 #include <stdint.h>
-#include "print.h"
 #include "clock.h"
 #include "os_main.h"
 
@@ -36,17 +35,13 @@ static void vInitHardware(void);
  */
 int16_t main(void)
 {
-    /* Print debug statement */
-	gvPrint("Entering main.\n");
-
     /* Initialize hardware */
     vInitHardware();
 
     /* Enter OS */
     gvOS_enter();
-	
-    gvPrint("Exiting now.\n");
 
+	/* Should never reach this return value */
 	return 1;
 }
 

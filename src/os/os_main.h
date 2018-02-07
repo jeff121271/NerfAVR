@@ -16,8 +16,7 @@
 /* Enumeration of task IDs */
 typedef enum os_task_id
 {
-    OS_TASK_PRINTER = 0u,   /* < Task 1 */
-    OS_TASK_2,
+    OS_TASK_DISPLAY = 0u,   /* < Display driver update task */
     OS_NUM_TASKS,           /* < Number of tasks */
 } os_task_id_t;
 
