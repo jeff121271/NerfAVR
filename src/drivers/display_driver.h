@@ -24,10 +24,10 @@
 /* Enumeration for display driver state machine */
 typedef enum display_driver_state
 {
-    DISPLAY_STATE_INIT; /* < Init state */
-    DISPLAY_STATE_WAIT; /* < Waiting state */
-    DISPLAY_STATE_PUT;  /* < Put character state */
-} display_drver_state_t;
+    DISPLAY_STATE_INIT = 0,		/* < Init state */
+    DISPLAY_STATE_WAIT,			/* < Waiting state */
+    DISPLAY_STATE_PUT,			/* < Put character state */
+} display_driver_state_t;
 
 /* Global Functions */
 extern void gvDisplay_process(uint16_t uwCallRateMs);

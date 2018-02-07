@@ -3,31 +3,31 @@ NerfAVR.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000132  00000000  00000000  00000094  2**1
+  0 .text         0000013a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000028  00800060  00000132  000001c6  2**0
+  1 .data         00000028  00800060  0000013a  000001ce  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000012  00800088  00800088  000001ee  2**0
+  2 .bss          00000012  00800088  00800088  000001f6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000001ee  2**0
+  3 .comment      00000030  00000000  00000000  000001f6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000220  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000228  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000c0  00000000  00000000  00000260  2**0
+  5 .debug_aranges 000000c0  00000000  00000000  00000268  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000915  00000000  00000000  00000320  2**0
+  6 .debug_info   0000090f  00000000  00000000  00000328  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000007a8  00000000  00000000  00000c35  2**0
+  7 .debug_abbrev 00000794  00000000  00000000  00000c37  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000427  00000000  00000000  000013dd  2**0
+  8 .debug_line   00000485  00000000  00000000  000013cb  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000d8  00000000  00000000  00001804  2**2
+  9 .debug_frame  000000d8  00000000  00000000  00001850  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000415  00000000  00000000  000018dc  2**0
+ 10 .debug_str    00000427  00000000  00000000  00001928  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000046  00000000  00000000  00001cf1  2**0
+ 11 .debug_loc    00000046  00000000  00000000  00001d4f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000060  00000000  00000000  00001d37  2**0
+ 12 .debug_ranges 00000060  00000000  00000000  00001d95  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -67,7 +67,7 @@ Disassembly of section .text:
   36:	10 e0       	ldi	r17, 0x00	; 0
   38:	a0 e6       	ldi	r26, 0x60	; 96
   3a:	b0 e0       	ldi	r27, 0x00	; 0
-  3c:	e2 e3       	ldi	r30, 0x32	; 50
+  3c:	ea e3       	ldi	r30, 0x3A	; 58
   3e:	f1 e0       	ldi	r31, 0x01	; 1
   40:	02 c0       	rjmp	.+4      	; 0x46 <__SREG__+0x7>
   42:	05 90       	lpm	r0, Z+
@@ -90,7 +90,7 @@ Disassembly of section .text:
   58:	b2 07       	cpc	r27, r18
   5a:	e1 f7       	brne	.-8      	; 0x54 <.do_clear_bss_loop>
   5c:	02 d0       	rcall	.+4      	; 0x62 <main>
-  5e:	67 c0       	rjmp	.+206    	; 0x12e <_exit>
+  5e:	6b c0       	rjmp	.+214    	; 0x136 <_exit>
 
 00000060 <__bad_interrupt>:
   60:	cf cf       	rjmp	.-98     	; 0x0 <__vectors>
@@ -104,7 +104,7 @@ int16_t main(void)
 	gvPrint("Entering main.\n");
   62:	80 e6       	ldi	r24, 0x60	; 96
   64:	90 e0       	ldi	r25, 0x00	; 0
-  66:	09 d0       	rcall	.+18     	; 0x7a <gvPrint>
+  66:	0d d0       	rcall	.+26     	; 0x82 <gvPrint>
  *                                                                     
  */
 static void vInitHardware(void)
@@ -118,12 +118,12 @@ static void vInitHardware(void)
 
     /* Enter OS */
     gvOS_enter();
-  6a:	09 d0       	rcall	.+18     	; 0x7e <gvOS_enter>
+  6a:	0d d0       	rcall	.+26     	; 0x86 <gvOS_enter>
 	
     gvPrint("Exiting now.\n");
   6c:	80 e7       	ldi	r24, 0x70	; 112
   6e:	90 e0       	ldi	r25, 0x00	; 0
-  70:	04 d0       	rcall	.+8      	; 0x7a <gvPrint>
+  70:	08 d0       	rcall	.+16     	; 0x82 <gvPrint>
 
 	return 1;
 }
@@ -132,186 +132,193 @@ static void vInitHardware(void)
   76:	08 95       	ret
 
 00000078 <gvClock_init>:
-void gvClock_init(void);
+    /* Oscillator configuration: 8MHz loaded by hardware at reset */
+    
+    
 
-/* Local Variables */
+    /* Enable clock prescaler change */
+    CLKPR |= CLKPCE;
+  78:	86 b5       	in	r24, 0x26	; 38
+  7a:	87 60       	ori	r24, 0x07	; 7
+  7c:	86 bd       	out	0x26, r24	; 38
 
-void gvClock_init(void)
-{
-  78:	08 95       	ret
+    /* Set clock prescaler to zero (Divider = 1) */
+    CLKPR = 0u;
+  7e:	16 bc       	out	0x26, r1	; 38
+  80:	08 95       	ret
 
-0000007a <gvPrint>:
+00000082 <gvPrint>:
  *	Returns:
  *		N/A
  *
  */
 void gvPrint(char *pszString)
 {
-  7a:	08 95       	ret
+  82:	08 95       	ret
 
-0000007c <gvTimer_sleepMs>:
+00000084 <gvTimer_sleepMs>:
  *	Returns:
  *		N/A
  *
  */
 void gvTimer_sleepMs(uint16_t uwTimeMs)
 {
-  7c:	08 95       	ret
+  84:	08 95       	ret
 
-0000007e <gvOS_enter>:
+00000086 <gvOS_enter>:
  *
  */
 static void vOS_initTasks(void)
 {
-	/* Printer task */
-	xTaskPool[OS_TASK_PRINTER].uwRateMs = 10u;
-  7e:	e8 e8       	ldi	r30, 0x88	; 136
-  80:	f0 e0       	ldi	r31, 0x00	; 0
-  82:	8a e0       	ldi	r24, 0x0A	; 10
-  84:	90 e0       	ldi	r25, 0x00	; 0
-  86:	91 83       	std	Z+1, r25	; 0x01
-  88:	80 83       	st	Z, r24
-	xTaskPool[OS_TASK_PRINTER].uwTicks = 2u;
-  8a:	22 e0       	ldi	r18, 0x02	; 2
-  8c:	30 e0       	ldi	r19, 0x00	; 0
-  8e:	33 83       	std	Z+3, r19	; 0x03
-  90:	22 83       	std	Z+2, r18	; 0x02
-	xTaskPool[OS_TASK_PRINTER].pvInitFunction = NULL_PTR;
-  92:	15 82       	std	Z+5, r1	; 0x05
-  94:	14 82       	std	Z+4, r1	; 0x04
-	xTaskPool[OS_TASK_PRINTER].pvStepFunction = &gvPrinter_Body;
-  96:	20 e8       	ldi	r18, 0x80	; 128
-  98:	30 e0       	ldi	r19, 0x00	; 0
-  9a:	37 83       	std	Z+7, r19	; 0x07
-  9c:	26 83       	std	Z+6, r18	; 0x06
-	
-	/* Other printer task */
-	xTaskPool[OS_TASK_2].uwRateMs = 10u;
-  9e:	91 87       	std	Z+9, r25	; 0x09
-  a0:	80 87       	std	Z+8, r24	; 0x08
-	xTaskPool[OS_TASK_2].uwTicks = 1u;
-  a2:	81 e0       	ldi	r24, 0x01	; 1
-  a4:	90 e0       	ldi	r25, 0x00	; 0
-  a6:	93 87       	std	Z+11, r25	; 0x0b
-  a8:	82 87       	std	Z+10, r24	; 0x0a
-	xTaskPool[OS_TASK_2].pvInitFunction = NULL_PTR;
-  aa:	15 86       	std	Z+13, r1	; 0x0d
-  ac:	14 86       	std	Z+12, r1	; 0x0c
-	xTaskPool[OS_TASK_2].pvStepFunction = NULL_PTR;
-  ae:	17 86       	std	Z+15, r1	; 0x0f
-  b0:	16 86       	std	Z+14, r1	; 0x0e
-  b2:	0f 2e       	mov	r0, r31
-  b4:	f8 e9       	ldi	r31, 0x98	; 152
-  b6:	ef 2e       	mov	r14, r31
-  b8:	f0 e0       	ldi	r31, 0x00	; 0
-  ba:	ff 2e       	mov	r15, r31
-  bc:	f0 2d       	mov	r31, r0
-	
-	/* Enter scheduling loop */
-	for (;;)
-	{
-		/* Sleep for one tick */
-		gvTimer_sleepMs(1u);
-  be:	81 e0       	ldi	r24, 0x01	; 1
-  c0:	90 e0       	ldi	r25, 0x00	; 0
-  c2:	dc df       	rcall	.-72     	; 0x7c <gvTimer_sleepMs>
-  c4:	c8 e8       	ldi	r28, 0x88	; 136
-  c6:	d0 e0       	ldi	r29, 0x00	; 0
-  c8:	8e 01       	movw	r16, r28
-		
-		/* Loop through task pool */
-		for ( eId = 0; eId < OS_NUM_TASKS; eId++)
-		{
-			/* Decrement task counter */
-			xTaskPool[eId].uwTicks--;
-  ca:	8a 81       	ldd	r24, Y+2	; 0x02
-  cc:	9b 81       	ldd	r25, Y+3	; 0x03
-  ce:	01 97       	sbiw	r24, 0x01	; 1
-  d0:	9b 83       	std	Y+3, r25	; 0x03
-  d2:	8a 83       	std	Y+2, r24	; 0x02
-			
-			/* Check if task is ready */
-			if ( 0u == xTaskPool[eId].uwTicks )
-  d4:	89 2b       	or	r24, r25
-  d6:	79 f4       	brne	.+30     	; 0xf6 <gvOS_enter+0x78>
-			{
-				/* Null pointer check */
-				if ( NULL_PTR != xTaskPool[eId].pvStepFunction )
-  d8:	ee 81       	ldd	r30, Y+6	; 0x06
-  da:	ff 81       	ldd	r31, Y+7	; 0x07
-  dc:	30 97       	sbiw	r30, 0x00	; 0
-  de:	19 f0       	breq	.+6      	; 0xe6 <gvOS_enter+0x68>
-				{
-					/* Execute step function */
-					xTaskPool[eId].pvStepFunction(xTaskPool[eId].uwRateMs);
-  e0:	88 81       	ld	r24, Y
-  e2:	99 81       	ldd	r25, Y+1	; 0x01
-  e4:	09 95       	icall
-				}
-				
-				/* Reset task counter */
-				xTaskPool[eId].uwTicks = xTaskPool[eId].uwRateMs;
-  e6:	d8 01       	movw	r26, r16
-  e8:	8d 91       	ld	r24, X+
-  ea:	9c 91       	ld	r25, X
-  ec:	11 97       	sbiw	r26, 0x01	; 1
-  ee:	13 96       	adiw	r26, 0x03	; 3
-  f0:	9c 93       	st	X, r25
-  f2:	8e 93       	st	-X, r24
-  f4:	12 97       	sbiw	r26, 0x02	; 2
-  f6:	28 96       	adiw	r28, 0x08	; 8
-	{
-		/* Sleep for one tick */
-		gvTimer_sleepMs(1u);
-		
-		/* Loop through task pool */
-		for ( eId = 0; eId < OS_NUM_TASKS; eId++)
-  f8:	ce 15       	cp	r28, r14
-  fa:	df 05       	cpc	r29, r15
-  fc:	29 f7       	brne	.-54     	; 0xc8 <gvOS_enter+0x4a>
-  fe:	df cf       	rjmp	.-66     	; 0xbe <gvOS_enter+0x40>
+    /* Printer task */
+    xTaskPool[OS_TASK_PRINTER].uwRateMs = 10u;
+  86:	e8 e8       	ldi	r30, 0x88	; 136
+  88:	f0 e0       	ldi	r31, 0x00	; 0
+  8a:	8a e0       	ldi	r24, 0x0A	; 10
+  8c:	90 e0       	ldi	r25, 0x00	; 0
+  8e:	91 83       	std	Z+1, r25	; 0x01
+  90:	80 83       	st	Z, r24
+    xTaskPool[OS_TASK_PRINTER].uwTicks = 2u;
+  92:	22 e0       	ldi	r18, 0x02	; 2
+  94:	30 e0       	ldi	r19, 0x00	; 0
+  96:	33 83       	std	Z+3, r19	; 0x03
+  98:	22 83       	std	Z+2, r18	; 0x02
+    xTaskPool[OS_TASK_PRINTER].pvInitFunction = NULL_PTR;
+  9a:	15 82       	std	Z+5, r1	; 0x05
+  9c:	14 82       	std	Z+4, r1	; 0x04
+    xTaskPool[OS_TASK_PRINTER].pvStepFunction = &gvPrinter_Body;
+  9e:	24 e8       	ldi	r18, 0x84	; 132
+  a0:	30 e0       	ldi	r19, 0x00	; 0
+  a2:	37 83       	std	Z+7, r19	; 0x07
+  a4:	26 83       	std	Z+6, r18	; 0x06
+    
+    /* Other printer task */
+    xTaskPool[OS_TASK_2].uwRateMs = 10u;
+  a6:	91 87       	std	Z+9, r25	; 0x09
+  a8:	80 87       	std	Z+8, r24	; 0x08
+    xTaskPool[OS_TASK_2].uwTicks = 1u;
+  aa:	81 e0       	ldi	r24, 0x01	; 1
+  ac:	90 e0       	ldi	r25, 0x00	; 0
+  ae:	93 87       	std	Z+11, r25	; 0x0b
+  b0:	82 87       	std	Z+10, r24	; 0x0a
+    xTaskPool[OS_TASK_2].pvInitFunction = NULL_PTR;
+  b2:	15 86       	std	Z+13, r1	; 0x0d
+  b4:	14 86       	std	Z+12, r1	; 0x0c
+    xTaskPool[OS_TASK_2].pvStepFunction = NULL_PTR;
+  b6:	17 86       	std	Z+15, r1	; 0x0f
+  b8:	16 86       	std	Z+14, r1	; 0x0e
+  ba:	0f 2e       	mov	r0, r31
+  bc:	f8 e9       	ldi	r31, 0x98	; 152
+  be:	ef 2e       	mov	r14, r31
+  c0:	f0 e0       	ldi	r31, 0x00	; 0
+  c2:	ff 2e       	mov	r15, r31
+  c4:	f0 2d       	mov	r31, r0
+    
+    /* Enter scheduling loop */
+    for (;;)
+    {
+        /* Sleep for one tick */
+        gvTimer_sleepMs(1u);
+  c6:	81 e0       	ldi	r24, 0x01	; 1
+  c8:	90 e0       	ldi	r25, 0x00	; 0
+  ca:	dc df       	rcall	.-72     	; 0x84 <gvTimer_sleepMs>
+  cc:	c8 e8       	ldi	r28, 0x88	; 136
+  ce:	d0 e0       	ldi	r29, 0x00	; 0
+  d0:	8e 01       	movw	r16, r28
+        
+        /* Loop through task pool */
+        for ( eId = 0; eId < OS_NUM_TASKS; eId++)
+        {
+            /* Decrement task counter */
+            xTaskPool[eId].uwTicks--;
+  d2:	8a 81       	ldd	r24, Y+2	; 0x02
+  d4:	9b 81       	ldd	r25, Y+3	; 0x03
+  d6:	01 97       	sbiw	r24, 0x01	; 1
+  d8:	9b 83       	std	Y+3, r25	; 0x03
+  da:	8a 83       	std	Y+2, r24	; 0x02
+            
+            /* Check if task is ready */
+            if ( 0u == xTaskPool[eId].uwTicks )
+  dc:	89 2b       	or	r24, r25
+  de:	79 f4       	brne	.+30     	; 0xfe <gvOS_enter+0x78>
+            {
+                /* Null pointer check */
+                if ( NULL_PTR != xTaskPool[eId].pvStepFunction )
+  e0:	ee 81       	ldd	r30, Y+6	; 0x06
+  e2:	ff 81       	ldd	r31, Y+7	; 0x07
+  e4:	30 97       	sbiw	r30, 0x00	; 0
+  e6:	19 f0       	breq	.+6      	; 0xee <gvOS_enter+0x68>
+                {
+                    /* Execute step function */
+                    xTaskPool[eId].pvStepFunction(xTaskPool[eId].uwRateMs);
+  e8:	88 81       	ld	r24, Y
+  ea:	99 81       	ldd	r25, Y+1	; 0x01
+  ec:	09 95       	icall
+                }
+                
+                /* Reset task counter */
+                xTaskPool[eId].uwTicks = xTaskPool[eId].uwRateMs;
+  ee:	d8 01       	movw	r26, r16
+  f0:	8d 91       	ld	r24, X+
+  f2:	9c 91       	ld	r25, X
+  f4:	11 97       	sbiw	r26, 0x01	; 1
+  f6:	13 96       	adiw	r26, 0x03	; 3
+  f8:	9c 93       	st	X, r25
+  fa:	8e 93       	st	-X, r24
+  fc:	12 97       	sbiw	r26, 0x02	; 2
+  fe:	28 96       	adiw	r28, 0x08	; 8
+    {
+        /* Sleep for one tick */
+        gvTimer_sleepMs(1u);
+        
+        /* Loop through task pool */
+        for ( eId = 0; eId < OS_NUM_TASKS; eId++)
+ 100:	ce 15       	cp	r28, r14
+ 102:	df 05       	cpc	r29, r15
+ 104:	29 f7       	brne	.-54     	; 0xd0 <gvOS_enter+0x4a>
+ 106:	df cf       	rjmp	.-66     	; 0xc6 <gvOS_enter+0x40>
 
-00000100 <gvPrinter_Body>:
+00000108 <gvPrinter_Body>:
  */
 void gvPrinter_Body(uint16_t uwCallRateMs)
 {
-	static uint16_t suwTimerMs = 0u;
-	
-	suwTimerMs += uwCallRateMs;
- 100:	20 91 98 00 	lds	r18, 0x0098	; 0x800098 <suwTimerMs.1596>
- 104:	30 91 99 00 	lds	r19, 0x0099	; 0x800099 <suwTimerMs.1596+0x1>
- 108:	82 0f       	add	r24, r18
- 10a:	93 1f       	adc	r25, r19
-	
-	if ( 1000u <= suwTimerMs )
- 10c:	88 3e       	cpi	r24, 0xE8	; 232
- 10e:	23 e0       	ldi	r18, 0x03	; 3
- 110:	92 07       	cpc	r25, r18
- 112:	28 f4       	brcc	.+10     	; 0x11e <gvPrinter_Body+0x1e>
+    static uint16_t suwTimerMs = 0u;
+    
+    suwTimerMs += uwCallRateMs;
+ 108:	20 91 98 00 	lds	r18, 0x0098	; 0x800098 <suwTimerMs.1596>
+ 10c:	30 91 99 00 	lds	r19, 0x0099	; 0x800099 <suwTimerMs.1596+0x1>
+ 110:	82 0f       	add	r24, r18
+ 112:	93 1f       	adc	r25, r19
+    
+    if ( 1000u <= suwTimerMs )
+ 114:	88 3e       	cpi	r24, 0xE8	; 232
+ 116:	23 e0       	ldi	r18, 0x03	; 3
+ 118:	92 07       	cpc	r25, r18
+ 11a:	28 f4       	brcc	.+10     	; 0x126 <gvPrinter_Body+0x1e>
  */
 void gvPrinter_Body(uint16_t uwCallRateMs)
 {
-	static uint16_t suwTimerMs = 0u;
-	
-	suwTimerMs += uwCallRateMs;
- 114:	90 93 99 00 	sts	0x0099, r25	; 0x800099 <suwTimerMs.1596+0x1>
- 118:	80 93 98 00 	sts	0x0098, r24	; 0x800098 <suwTimerMs.1596>
- 11c:	08 95       	ret
-	
-	if ( 1000u <= suwTimerMs )
-	{
-		suwTimerMs = 0u;
- 11e:	10 92 99 00 	sts	0x0099, r1	; 0x800099 <suwTimerMs.1596+0x1>
- 122:	10 92 98 00 	sts	0x0098, r1	; 0x800098 <suwTimerMs.1596>
-		
-		gvPrint("Task 1.\n");
- 126:	8e e7       	ldi	r24, 0x7E	; 126
- 128:	90 e0       	ldi	r25, 0x00	; 0
- 12a:	a7 df       	rcall	.-178    	; 0x7a <gvPrint>
- 12c:	08 95       	ret
+    static uint16_t suwTimerMs = 0u;
+    
+    suwTimerMs += uwCallRateMs;
+ 11c:	90 93 99 00 	sts	0x0099, r25	; 0x800099 <suwTimerMs.1596+0x1>
+ 120:	80 93 98 00 	sts	0x0098, r24	; 0x800098 <suwTimerMs.1596>
+ 124:	08 95       	ret
+    
+    if ( 1000u <= suwTimerMs )
+    {
+        suwTimerMs = 0u;
+ 126:	10 92 99 00 	sts	0x0099, r1	; 0x800099 <suwTimerMs.1596+0x1>
+ 12a:	10 92 98 00 	sts	0x0098, r1	; 0x800098 <suwTimerMs.1596>
+        
+        gvPrint("Task 1.\n");
+ 12e:	8e e7       	ldi	r24, 0x7E	; 126
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	a7 df       	rcall	.-178    	; 0x82 <gvPrint>
+ 134:	08 95       	ret
 
-0000012e <_exit>:
- 12e:	f8 94       	cli
+00000136 <_exit>:
+ 136:	f8 94       	cli
 
-00000130 <__stop_program>:
- 130:	ff cf       	rjmp	.-2      	; 0x130 <__stop_program>
+00000138 <__stop_program>:
+ 138:	ff cf       	rjmp	.-2      	; 0x138 <__stop_program>

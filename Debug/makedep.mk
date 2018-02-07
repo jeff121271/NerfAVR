@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\drivers\display_driver.c
+
 src\general\main.c
 
 src\hal\AT4313\clock.c

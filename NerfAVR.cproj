@@ -102,6 +102,7 @@
       <Value>../src/general</Value>
       <Value>../src/os</Value>
       <Value>../src/hal/AT4313</Value>
+      <Value>../src/drivers</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -124,6 +125,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="src\drivers\display_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\drivers\display_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\general\main.c">
       <SubType>compile</SubType>
     </Compile>
@@ -166,6 +173,7 @@
     <Folder Include="src\general" />
     <Folder Include="src\hal" />
     <Folder Include="src\hal\AT4313" />
+    <Folder Include="src\drivers" />
     <Folder Include="src\os" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

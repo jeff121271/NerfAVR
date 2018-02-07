@@ -11,6 +11,7 @@
 /* Includes */
 #include "typedefs.h"
 #include "print.h"
+#include "clock.h"
 #include "os_main.h"
 
 /* Prototypes */

@@ -11,7 +11,6 @@
 /* Includes */
 #include <math.h>
 #include "typedefs.h"
-#include "tm1637.h"
 #include "display_driver.h"
 
 /* Prototypes */
@@ -58,13 +57,17 @@ void gvDisplay_process(uint16_t uwCallRateMs)
             /* Get data to send */
             
             /* Select the appropriate digit */
-            uwTxData = (uint16_t)((uwTxData / pow(10u, subNumDigits)) % 10u);
+            uwTxData = (uint16_t)((uwTxData / ((uint16_t)pow(10u, subNumDigits))) % 10u);
             
             /* Send digit to display */
             
             /* Decrement digit counter */
             subNumDigits--;
             break;
+			
+		/* Default case: Do nothing */
+		default:
+			break;
     }
     
     /* Process state transitions */
@@ -99,5 +102,10 @@ void gvDisplay_process(uint16_t uwCallRateMs)
                 subTimerMs = 0u;                
             }
             break;
+		
+		/* Default case: Move to init state */
+		default:
+			seState = DISPLAY_STATE_INIT;
+			break;
     }
 }
