@@ -9,7 +9,8 @@
  */
  
 /* Includes */
-#include "typedefs.h"
+#include <stdint.h>
+#include "null.h"
 #include "tasks.h"
 #include "timer.h"
 #include "os_main.h"

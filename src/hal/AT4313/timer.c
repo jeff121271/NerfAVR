@@ -10,7 +10,7 @@
  */
 
 /* Includes */ 
-#include "typedefs.h"
+#include <stdint.h>
 #include "timer.h"
 
 /* Prototypes */

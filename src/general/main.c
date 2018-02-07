@@ -9,7 +9,7 @@
  */
 
 /* Includes */
-#include "typedefs.h"
+#include <stdint.h>
 #include "print.h"
 #include "clock.h"
 #include "os_main.h"

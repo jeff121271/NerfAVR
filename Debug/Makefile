@@ -48,6 +48,7 @@ C_SRCS +=  \
 ../src/hal/AT4313/clock.c \
 ../src/hal/AT4313/print.c \
 ../src/hal/AT4313/timer.c \
+../src/hal/AT4313/tm1637.c \
 ../src/os/os_main.c \
 ../src/os/tasks.c
 
@@ -64,6 +65,7 @@ src/general/main.o \
 src/hal/AT4313/clock.o \
 src/hal/AT4313/print.o \
 src/hal/AT4313/timer.o \
+src/hal/AT4313/tm1637.o \
 src/os/os_main.o \
 src/os/tasks.o
 
@@ -73,6 +75,7 @@ src/general/main.o \
 src/hal/AT4313/clock.o \
 src/hal/AT4313/print.o \
 src/hal/AT4313/timer.o \
+src/hal/AT4313/tm1637.o \
 src/os/os_main.o \
 src/os/tasks.o
 
@@ -82,6 +85,7 @@ src/general/main.d \
 src/hal/AT4313/clock.d \
 src/hal/AT4313/print.d \
 src/hal/AT4313/timer.d \
+src/hal/AT4313/tm1637.d \
 src/os/os_main.d \
 src/os/tasks.d
 
@@ -91,6 +95,7 @@ src/general/main.d \
 src/hal/AT4313/clock.d \
 src/hal/AT4313/print.d \
 src/hal/AT4313/timer.d \
+src/hal/AT4313/tm1637.d \
 src/os/os_main.d \
 src/os/tasks.d
 
@@ -108,6 +113,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

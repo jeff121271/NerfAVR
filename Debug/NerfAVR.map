@@ -16,20 +16,20 @@ Discarded input sections
  .bss           0x00000000        0x0 src/drivers/display_driver.o
  .text.gvDisplay_process
                 0x00000000       0x62 src/drivers/display_driver.o
- .bss.subNumDigits.1697
+ .bss.subNumDigits.1720
                 0x00000000        0x1 src/drivers/display_driver.o
- .bss.seState.1698
+ .bss.seState.1721
                 0x00000000        0x1 src/drivers/display_driver.o
- .bss.subTimerMs.1696
+ .bss.subTimerMs.1719
                 0x00000000        0x1 src/drivers/display_driver.o
- .debug_info    0x00000000      0x100 src/drivers/display_driver.o
+ .debug_info    0x00000000      0x10e src/drivers/display_driver.o
  .debug_abbrev  0x00000000       0x98 src/drivers/display_driver.o
  .debug_loc     0x00000000       0x46 src/drivers/display_driver.o
  .debug_aranges
                 0x00000000       0x20 src/drivers/display_driver.o
  .debug_ranges  0x00000000       0x10 src/drivers/display_driver.o
- .debug_line    0x00000000       0xd2 src/drivers/display_driver.o
- .debug_str     0x00000000      0x1d9 src/drivers/display_driver.o
+ .debug_line    0x00000000       0xfc src/drivers/display_driver.o
+ .debug_str     0x00000000      0x205 src/drivers/display_driver.o
  .comment       0x00000000       0x31 src/drivers/display_driver.o
  .debug_frame   0x00000000       0x24 src/drivers/display_driver.o
  .text          0x00000000        0x0 src/general/main.o
@@ -44,6 +44,47 @@ Discarded input sections
  .text          0x00000000        0x0 src/hal/AT4313/timer.o
  .data          0x00000000        0x0 src/hal/AT4313/timer.o
  .bss           0x00000000        0x0 src/hal/AT4313/timer.o
+ .text          0x00000000        0x0 src/hal/AT4313/tm1637.o
+ .data          0x00000000        0x0 src/hal/AT4313/tm1637.o
+ .bss           0x00000000        0x0 src/hal/AT4313/tm1637.o
+ .text.TM1637_start
+                0x00000000       0x10 src/hal/AT4313/tm1637.o
+ .text.TM1637_stop
+                0x00000000       0x22 src/hal/AT4313/tm1637.o
+ .text.TM1637_write_byte
+                0x00000000       0x6c src/hal/AT4313/tm1637.o
+ .text.TM1637_configure
+                0x00000000       0x20 src/hal/AT4313/tm1637.o
+ .text.TM1637_display_segments
+                0x00000000       0x26 src/hal/AT4313/tm1637.o
+ .text.TM1637_display_digit
+                0x00000000       0x28 src/hal/AT4313/tm1637.o
+ .text.TM1637_display_colon
+                0x00000000       0x24 src/hal/AT4313/tm1637.o
+ .text.TM1637_clear
+                0x00000000       0x1e src/hal/AT4313/tm1637.o
+ .text.TM1637_init
+                0x00000000       0x1a src/hal/AT4313/tm1637.o
+ .text.TM1637_set_brightness
+                0x00000000        0xa src/hal/AT4313/tm1637.o
+ .text.TM1637_enable
+                0x00000000       0x1e src/hal/AT4313/tm1637.o
+ .bss._flags    0x00000000        0x1 src/hal/AT4313/tm1637.o
+ .data._digit   0x00000000        0x1 src/hal/AT4313/tm1637.o
+ .data._brightness
+                0x00000000        0x1 src/hal/AT4313/tm1637.o
+ .rodata._digit2segments
+                0x00000000        0xa src/hal/AT4313/tm1637.o
+ .debug_info    0x00000000      0x6bb src/hal/AT4313/tm1637.o
+ .debug_abbrev  0x00000000      0x1ca src/hal/AT4313/tm1637.o
+ .debug_loc     0x00000000      0x457 src/hal/AT4313/tm1637.o
+ .debug_aranges
+                0x00000000       0x70 src/hal/AT4313/tm1637.o
+ .debug_ranges  0x00000000       0x60 src/hal/AT4313/tm1637.o
+ .debug_line    0x00000000      0x3ab src/hal/AT4313/tm1637.o
+ .debug_str     0x00000000      0x2ba src/hal/AT4313/tm1637.o
+ .comment       0x00000000       0x31 src/hal/AT4313/tm1637.o
+ .debug_frame   0x00000000       0xd8 src/hal/AT4313/tm1637.o
  .text          0x00000000        0x0 src/os/os_main.o
  .data          0x00000000        0x0 src/os/os_main.o
  .bss           0x00000000        0x0 src/os/os_main.o
@@ -119,6 +160,7 @@ LOAD src/general/main.o
 LOAD src/hal/AT4313/clock.o
 LOAD src/hal/AT4313/print.o
 LOAD src/hal/AT4313/timer.o
+LOAD src/hal/AT4313/tm1637.o
 LOAD src/os/os_main.o
 LOAD src/os/tasks.o
 START GROUP
@@ -376,7 +418,7 @@ END GROUP
  *(.bss*)
  .bss.xTaskPool
                 0x00800088       0x10 src/os/os_main.o
- .bss.suwTimerMs.1596
+ .bss.suwTimerMs.1603
                 0x00800098        0x2 src/os/tasks.o
  *(COMMON)
                 0x0080009a                PROVIDE (__bss_end, .)
@@ -475,15 +517,15 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x90f
+.debug_info     0x00000000      0x947
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x456 H:/atmel/7.0/Packs/atmel/ATtiny_DFP/1.3.147/gcc/dev/attiny4313/avr25/crtattiny4313.o
- .debug_info    0x00000456      0x108 src/general/main.o
- .debug_info    0x0000055e       0x83 src/hal/AT4313/clock.o
- .debug_info    0x000005e1       0x64 src/hal/AT4313/print.o
- .debug_info    0x00000645       0x88 src/hal/AT4313/timer.o
- .debug_info    0x000006cd      0x183 src/os/os_main.o
- .debug_info    0x00000850       0xbf src/os/tasks.o
+ .debug_info    0x00000456      0x116 src/general/main.o
+ .debug_info    0x0000056c       0x83 src/hal/AT4313/clock.o
+ .debug_info    0x000005ef       0x64 src/hal/AT4313/print.o
+ .debug_info    0x00000653       0x96 src/hal/AT4313/timer.o
+ .debug_info    0x000006e9      0x191 src/os/os_main.o
+ .debug_info    0x0000087a       0xcd src/os/tasks.o
 
 .debug_abbrev   0x00000000      0x794
  *(.debug_abbrev)
@@ -495,15 +537,15 @@ END GROUP
  .debug_abbrev  0x000005d5      0x125 src/os/os_main.o
  .debug_abbrev  0x000006fa       0x9a src/os/tasks.o
 
-.debug_line     0x00000000      0x485
+.debug_line     0x00000000      0x53c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x115 H:/atmel/7.0/Packs/atmel/ATtiny_DFP/1.3.147/gcc/dev/attiny4313/avr25/crtattiny4313.o
- .debug_line    0x00000115       0xae src/general/main.o
- .debug_line    0x000001c3       0x9a src/hal/AT4313/clock.o
- .debug_line    0x0000025d       0x47 src/hal/AT4313/print.o
- .debug_line    0x000002a4       0x64 src/hal/AT4313/timer.o
- .debug_line    0x00000308       0xe6 src/os/os_main.o
- .debug_line    0x000003ee       0x97 src/os/tasks.o
+ .debug_line    0x00000115       0xe7 src/general/main.o
+ .debug_line    0x000001fc       0x9a src/hal/AT4313/clock.o
+ .debug_line    0x00000296       0x47 src/hal/AT4313/print.o
+ .debug_line    0x000002dd       0x8e src/hal/AT4313/timer.o
+ .debug_line    0x0000036b      0x110 src/os/os_main.o
+ .debug_line    0x0000047b       0xc1 src/os/tasks.o
 
 .debug_frame    0x00000000       0xd8
  *(.debug_frame)
@@ -517,18 +559,18 @@ END GROUP
 .debug_str      0x00000000      0x427
  *(.debug_str)
  .debug_str     0x00000000      0x17a H:/atmel/7.0/Packs/atmel/ATtiny_DFP/1.3.147/gcc/dev/attiny4313/avr25/crtattiny4313.o
- .debug_str     0x0000017a      0x118 src/general/main.o
-                                0x14d (size before relaxing)
- .debug_str     0x00000292       0x47 src/hal/AT4313/clock.o
+ .debug_str     0x0000017a      0x13d src/general/main.o
+                                0x179 (size before relaxing)
+ .debug_str     0x000002b7       0x22 src/hal/AT4313/clock.o
                                 0x157 (size before relaxing)
  .debug_str     0x000002d9       0x24 src/hal/AT4313/print.o
                                  0xf2 (size before relaxing)
  .debug_str     0x000002fd       0x3c src/hal/AT4313/timer.o
-                                0x138 (size before relaxing)
+                                0x164 (size before relaxing)
  .debug_str     0x00000339       0xb5 src/os/os_main.o
-                                0x1d5 (size before relaxing)
+                                0x201 (size before relaxing)
  .debug_str     0x000003ee       0x39 src/os/tasks.o
-                                0x146 (size before relaxing)
+                                0x172 (size before relaxing)
 
 .debug_loc      0x00000000       0x46
  *(.debug_loc)

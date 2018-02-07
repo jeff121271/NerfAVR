@@ -8,7 +8,7 @@
  */
 
 /* Includes */ 
-#include "typedefs.h"
+#include <stdint.h>
 #include "print.h"
 #include "tasks.h"
 

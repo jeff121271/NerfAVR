@@ -9,8 +9,9 @@
  */
  
 /* Includes */
+#include <stdint.h>
 #include <math.h>
-#include "typedefs.h"
+#include "tm1637.h"
 #include "display_driver.h"
 
 /* Prototypes */
