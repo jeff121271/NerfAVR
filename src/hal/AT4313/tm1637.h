@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2017, Łukasz Marcin Podkalicki <lpodkalicki@gmail.com>
- * 
+ *
  * This is ATtiny13/25/45/85 library for 4-Digit LED Display based on TM1637 chip.
  *
  * Features:
@@ -8,7 +8,7 @@
  * - display colon
  * - display raw segments
  * - display on/off
- * - brightness control 
+ * - brightness control
  *
  * References:
  * - library: https://github.com/lpodkalicki/attiny-tm1637-library
@@ -54,7 +54,7 @@
 
 /**
  * Initialize TM1637 display driver.
- * Clock pin (TM1637_CLK_PIN) and data pin (TM1637_DIO_PIN) 
+ * Clock pin (TM1637_CLK_PIN) and data pin (TM1637_DIO_PIN)
  * are defined at the top of this file.
  */
 void TM1637_init(void);
@@ -66,7 +66,7 @@ void TM1637_display_digit(const uint8_t addr, const uint8_t digit);
 
 /**
  * Display raw segments at positions (0x00..0x03)
- * 
+ *
  *      bits:                 hex:
  *        -- 0 --               -- 01 --
  *       |       |             |        |

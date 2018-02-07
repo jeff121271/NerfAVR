@@ -7,7 +7,7 @@
  *  2/1/18
  *
  */
- 
+
 /* Includes */
 #include <avr/io.h>
 #include "clock.h"
@@ -34,8 +34,7 @@ void gvClock_init(void);
 void gvClock_init(void)
 {
     /* Oscillator configuration: 8MHz loaded by hardware at reset */
-    
-    
+
 
     /* Enable clock prescaler change */
     CLKPR |= CLKPCE;

@@ -6,7 +6,7 @@
  *  Jeff Campbell
  *  1/31/18
  */
- 
+
 #ifndef TASKS_H
 #define TASKS_H
 

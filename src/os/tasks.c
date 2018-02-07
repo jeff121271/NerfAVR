@@ -7,7 +7,7 @@
  *  1/31/18
  */
 
-/* Includes */ 
+/* Includes */
 #include <stdint.h>
 #include "tasks.h"
 

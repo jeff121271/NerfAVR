@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2017, Łukasz Marcin Podkalicki <lpodkalicki@gmail.com>
- * 
+ *
  * This is ATtiny13/25/45/85 library for 4-Digit LED Display based on TM1637 chip.
  *
  * Features:
@@ -89,8 +89,8 @@ TM1637_display_segments(const uint8_t addr, const uint8_t segments)
 	TM1637_start();
 	TM1637_write_byte(TM1637_CMD_SET_ADDR | addr);
 	TM1637_write_byte(segments);
-	TM1637_stop();	
-	TM1637_configure();	
+	TM1637_stop();
+	TM1637_configure();
 }
 
 void
@@ -107,7 +107,7 @@ TM1637_display_colon(bool value)
 
 void
 TM1637_clear(void)
-{	
+{
 
 	TM1637_display_colon(false);
 	TM1637_display_segments(TM1637_SET_ADR_00H, 0x00);

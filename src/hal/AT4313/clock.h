@@ -7,7 +7,7 @@
  *  2/1/18
  *
  */
- 
+
 #ifndef CLOCK_H
 #define CLOCK_H
 

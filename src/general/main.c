@@ -56,7 +56,7 @@ int16_t main(void)
  *
  *  Returns:
  *      N/A
- *                                                                     
+ *
  */
 static void vInitHardware(void)
 {

@@ -6,7 +6,7 @@
  *	Jeff Campbell
  *	2/7/18
  *
- */ 
+ */
 
 #ifndef NULL_H
 #define NULL_H
