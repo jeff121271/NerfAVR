@@ -15,6 +15,9 @@
 
 /* Defines */
 
+/* OSCCAL value for maximum frequency */
+#define CLOCK_OSC_MAX_FREQ 0x7Fu
+
 /* Clock SEL config for external clock */
 #define CLOCK_SEL_EXTERNAL 0x0u
 
