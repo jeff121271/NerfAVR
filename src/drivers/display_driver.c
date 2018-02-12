@@ -16,8 +16,10 @@
 
 /* Prototypes */
 void gvDisplay_process(uint16_t uwCallRateMs);
+void gvDisplay_setOutput(uint16_t uwNew);
 
 /* Local Variables */
+static uint16_t xuwDisplay = 0u;
 
 /**
  *  void gvDisplay_process(uint16_t uwCallRateMs)
@@ -109,4 +111,23 @@ void gvDisplay_process(uint16_t uwCallRateMs)
 			seState = DISPLAY_STATE_INIT;
 			break;
     }
+}
+
+/**
+ *	void gvDisplay_setOutput(uint16_t uwNew)
+ *
+ *	Description:
+ *		Sets the number to be displayed on the 7seg display.
+ *
+ *	Parameters:
+ *		uwNew = New number to display
+ *
+ *	Returns:
+ *		N/A
+ *
+ */
+void gvDisplay_setOutput(uint16_t uwNew)
+{
+	/* Set the new number */
+	xuwDisplay = uwNew;
 }

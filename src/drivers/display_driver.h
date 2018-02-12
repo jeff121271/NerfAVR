@@ -31,5 +31,6 @@ typedef enum display_driver_state
 
 /* Global Functions */
 extern void gvDisplay_process(uint16_t uwCallRateMs);
+extern void gvDisplay_setOutput(uint16_t uwNew);
 
 #endif /* #ifndef DISPLAY_DRIVER_H */
