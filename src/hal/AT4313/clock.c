@@ -34,10 +34,10 @@ void gvClock_init(void);
 void gvClock_init(void)
 {
     /* Oscillator configuration: 8MHz loaded by hardware at reset */
-
+    OSCCAL = CLOCK_OSC_MAX_FREQ;
 
     /* Enable clock prescaler change */
-    CLKPR |= CLKPCE;
+    CLKPR |= 1 << CLKPCE;
 
     /* Set clock prescaler to zero (Divider = 1) */
     CLKPR = 0u;
