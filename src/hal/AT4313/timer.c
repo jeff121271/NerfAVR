@@ -11,27 +11,46 @@
 
 /* Includes */
 #include <stdint.h>
+#include "clock.h"
 #include "timer.h"
 
 /* Prototypes */
-void gvTimer_sleepMs(uint16_t uwTimeMs);
+void gvTimer_sleepMs(uint16_t uwTimeMs, uint16_t uwStartOverride);
 
 /* Local Variables */
 
 /**
- *	void gvTimer_sleepMs(uint8_t ubTimeMs)
+ *	void gvTimer_sleepMs(uint16_t uwTimeMs, uint16_t uwStartOverride)
  *
  *	Description:
  *		Sleeps for the given amount of time.
  *
  *	Parameters:
- *		ubTimeMs = Time to sleep, in ms.
+ *		uwTimeMs = Time to sleep, in ms.
+ *		uwStartOverride = Override value for starting time
  *
  *	Returns:
  *		N/A
  *
  */
-void gvTimer_sleepMs(uint16_t uwTimeMs)
+void gvTimer_sleepMs(uint16_t uwTimeMs, uint16_t uwStartOverride)
 {
-	// todo: implement this
+	uint16_t uwStart = 0u;
+	uint16_t uwEnd = 0u;
+
+	/* Get start time */
+	uwStart = guwClock_read();
+	uwEnd = uwStart;
+
+	/* Override start time if necessary */
+	if ( TIMER_OVERRIDE_SKIP != uwStartOverride )
+	{
+		uwStart = uwStartOverride;
+	}
+
+	/* Loop until 1ms has passed */
+	while ( 1000u > guwClock_getDeltaUs(uwStart, uwEnd) )
+	{
+		uwEnd = guwClock_read();
+	}
 }

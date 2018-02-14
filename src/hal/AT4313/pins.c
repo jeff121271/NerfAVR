@@ -46,7 +46,7 @@ void gvPins_init(void)
 	digitalPins[PIN_TEST_OUTPUT].pullupEnable = PIN_PULLUP_DISABLE;
 	digitalPins[PIN_TEST_OUTPUT].pinNum = 0u;
 
-	/* Configure pins */
+	/* Apply pin configurations */
 	vPins_configAll();
 
 	/* Update pins */

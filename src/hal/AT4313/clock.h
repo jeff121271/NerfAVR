@@ -32,5 +32,7 @@
 
 /* Global Functions */
 extern void gvClock_init(void);
+extern uint16_t guwClock_read(void);
+extern uint16_t guwClock_getDeltaUs(uint16_t uwStart, uint16_t uwEnd);
 
 #endif /* #ifndef CLOCK_H */

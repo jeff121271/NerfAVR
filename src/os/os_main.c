@@ -11,6 +11,7 @@
 /* Includes */
 #include <stdint.h>
 #include "null.h"
+#include "clock.h"
 #include "tasks.h"
 #include "timer.h"
 #include "display_driver.h"
@@ -39,6 +40,7 @@ static os_task_t xTaskPool[OS_NUM_TASKS];
  */
 void gvOS_enter(void)
 {
+	uint16_t uwStartTime = TIMER_OVERRIDE_SKIP;
     os_task_id_t eId;
 
     /* Initialize tasks */
@@ -54,11 +56,14 @@ void gvOS_enter(void)
         }
     }
 
-    /* Enter scheduling loop */
+	/* Enter scheduling loop */
     for (;;)
     {
-        /* Sleep for one tick */
-        gvTimer_sleepMs(1u);
+        /* Sleep for the rest of one tick */
+        gvTimer_sleepMs(1u, uwStartTime);
+
+		/* Update start time */
+		uwStartTime = guwClock_read();
 
         /* Loop through task pool */
         for ( eId = 0; eId < OS_NUM_TASKS; eId++)

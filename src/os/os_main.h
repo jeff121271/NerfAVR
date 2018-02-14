@@ -24,10 +24,10 @@ typedef enum os_task_id
 /* Typedef for OS Task structure */
 typedef struct os_task
 {
-    uint16_t uwRateMs;                                /* < Call rate in ms */
+    uint16_t uwRateMs;                               /* < Call rate in ms */
     uint16_t uwTicks;                                /* < Ticks until call time */
     void (*pvInitFunction)(void);                    /* < Init function of task */
-    void (*pvStepFunction)(uint16_t uwCallRateMs);    /* < Body of task */
+    void (*pvStepFunction)(uint16_t uwCallRateMs);   /* < Body of task */
 } os_task_t;
 
 /* Global functions */
