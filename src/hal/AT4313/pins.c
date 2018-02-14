@@ -9,7 +9,6 @@
  */
 
 /* Includes */
-#include <stdbool.h>
 #include <avr/io.h>
 #include "pins.h"
 
