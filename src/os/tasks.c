@@ -32,12 +32,6 @@ void gvTasks_pinUpdate(uint16_t uwCallRateMs);
  */
 void gvTasks_pinUpdate(uint16_t uwCallRateMs)
 {
-	static uint8_t ubPin = PIN_LOGIC_HIGH;
-
-	/* Toggle test pin */
-	ubPin = (PIN_LOGIC_LOW == ubPin) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
-	gvPins_control(PIN_TEST_OUTPUT, ubPin);
-
 	/* Call pin update function */
 	gvPins_updateAll();
 }
