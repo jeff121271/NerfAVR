@@ -37,6 +37,7 @@ void gvTimer_sleepMs(uint16_t uwTimeMs, uint16_t uwStartOverride)
 {
 	uint16_t uwStart = 0u;
 	uint16_t uwEnd = 0u;
+	uint16_t uwEndTime = 0u;
 
 	/* Get start time */
 	uwStart = guwClock_read();
@@ -48,8 +49,11 @@ void gvTimer_sleepMs(uint16_t uwTimeMs, uint16_t uwStartOverride)
 		uwStart = uwStartOverride;
 	}
 
-	/* Loop until 1ms has passed */
-	while ( 1000u > guwClock_getDeltaUs(uwStart, uwEnd) )
+	/* Calculate end time */
+	uwEndTime = (uwTimeMs * 1000u) - 50u;
+
+	/* Loop until request time has passed */
+	while ( uwEndTime > guwClock_getDeltaUs(uwStart, uwEnd) )
 	{
 		uwEnd = guwClock_read();
 	}

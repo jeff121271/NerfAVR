@@ -150,15 +150,36 @@ void gvPins_updateAll(void)
 			switch (digitalPins[ePinIdx].portSel)
 			{
 				case PIN_SELECT_PORTA:
-					PORTA |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+					if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
+					{
+						PORTA &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
+					}
+					else
+					{
+						PORTA |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+					}
 					break;
 
 				case PIN_SELECT_PORTB:
-					PORTB |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+					if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
+					{
+						PORTB &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
+					}
+					else
+					{
+						PORTB |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+					}
 					break;
 
 				case PIN_SELECT_PORTD:
-					PORTD |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+					if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
+					{
+						PORTD &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
+					}
+					else
+					{
+						PORTD |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+					}
 					break;
 
 				default:
