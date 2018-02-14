@@ -18,20 +18,20 @@ void gvTasks_pinUpdate(uint16_t uwCallRateMs);
 /* Local Variables */
 
 /**
- *	void gvTasks_pinUpdate(uint16_t uwCallRateMs)
+ *    void gvTasks_pinUpdate(uint16_t uwCallRateMs)
  *
- *	Description:
- *		Calls the pin update function.
+ *    Description:
+ *        Calls the pin update function.
  *
- *	Parameters:
- *		uwCallRateMs = Call rate of function, in ms
+ *    Parameters:
+ *        uwCallRateMs = Call rate of function, in ms
  *
- *	Returns:
- *		N/A
+ *    Returns:
+ *        N/A
  *
  */
 void gvTasks_pinUpdate(uint16_t uwCallRateMs)
 {
-	/* Call pin update function */
-	gvPins_updateAll();
+    /* Call pin update function */
+    gvPins_updateAll();
 }

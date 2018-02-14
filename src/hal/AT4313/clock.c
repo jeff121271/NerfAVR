@@ -3,7 +3,7 @@
  *
  *  Contains code for interacting with the system clock.
  *
- *	Timer 1 will be used as the clock here.
+ *    Timer 1 will be used as the clock here.
  *
  *  Jeff Campbell
  *  2/1/18
@@ -46,56 +46,56 @@ void gvClock_init(void)
     /* Set clock prescaler to zero (Divider = 1) */
     CLKPR = 0u;
 
-	/* Enable Timer 1 with no clock divider */
-	TCCR1B |= 1u << CS10;
+    /* Enable Timer 1 with no clock divider */
+    TCCR1B |= 1u << CS10;
 }
 
 /**
- *	uint16_t guwClock_getDeltaUs(uint16_t uwStart, uint16_t uwEnd)
+ *    uint16_t guwClock_getDeltaUs(uint16_t uwStart, uint16_t uwEnd)
  *
- *	Description:
- *		Calculates the difference, in microseconds, between two clock values.
+ *    Description:
+ *        Calculates the difference, in microseconds, between two clock values.
  *
- *	Parameters:
- *		uwStart = Starting value
- *		uwEnd = Ending value
+ *    Parameters:
+ *        uwStart = Starting value
+ *        uwEnd = Ending value
  *
- *	Returns:
- *		The difference in microseconds
+ *    Returns:
+ *        The difference in microseconds
  *
  */
 uint16_t guwClock_getDeltaUs(uint16_t uwStart, uint16_t uwEnd)
 {
-	uint16_t uwResult;
+    uint16_t uwResult;
 
-	/* Get the difference between start and end */
-	uwResult = uwEnd - uwStart;
+    /* Get the difference between start and end */
+    uwResult = uwEnd - uwStart;
 
-	/* Correct difference in the event of an overflow */
-	if ( uwEnd < uwStart )
-	{
-		uwResult = (0xFFFFu - uwEnd) + uwStart;
-	}
+    /* Correct difference in the event of an overflow */
+    if ( uwEnd < uwStart )
+    {
+        uwResult = (0xFFFFu - uwEnd) + uwStart;
+    }
 
-	/* Return result */
-	return uwResult;
+    /* Return result */
+    return uwResult;
 }
 
 /**
- *	uint16_t guwClock_read(void)
+ *    uint16_t guwClock_read(void)
  *
- *	Description:
- *		Reads the current value of the 16-bit clock.
+ *    Description:
+ *        Reads the current value of the 16-bit clock.
  *
- *	Parameters:
- *		N/A
+ *    Parameters:
+ *        N/A
  *
- *	Returns:
- *		The current clock value.
+ *    Returns:
+ *        The current clock value.
  *
  */
 uint16_t guwClock_read(void)
 {
-	/* Return current counter status */
-	return (uint16_t)TCNT1;
+    /* Return current counter status */
+    return (uint16_t)TCNT1;
 }

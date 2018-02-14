@@ -1,10 +1,10 @@
 /*
- *	pins.h
+ *    pins.h
  *
- *	Interface file for pins.c.
+ *    Interface file for pins.c.
  *
- *	Jeff Campbell
- *	2/13/18
+ *    Jeff Campbell
+ *    2/13/18
  *
  */
 
@@ -46,18 +46,18 @@
 /* Struct describing a pin's characteristics */
 typedef struct pin_desc
 {
-	uint8_t logicLevel:1;		/* Logic level */
-	uint8_t direction:1;		/* I/O direction */
-	uint8_t portSel:2;			/* Port selection (see defines above) */
-	uint8_t pullupEnable:1;		/* Pullup logic enable */
-	uint8_t pinNum:3;			/* Number of pin */
+    uint8_t logicLevel:1;       /* Logic level */
+    uint8_t direction:1;        /* I/O direction */
+    uint8_t portSel:2;          /* Port selection (see defines above) */
+    uint8_t pullupEnable:1;     /* Pullup logic enable */
+    uint8_t pinNum:3;           /* Number of pin */
 } pin_desc_t;
 
 /* Enumeration of pin index values */
 typedef enum pin_index
 {
-	PIN_TEST_OUTPUT = 0u,	/* Test pin */
-	PIN_NUMBER				/* Number of pins */
+    PIN_TEST_OUTPUT = 0u,   /* Test pin */
+    PIN_NUMBER              /* Number of pins */
 } pin_index_t;
 
 /* Global Functions */

@@ -1,10 +1,10 @@
 /**
- *	null.h
+ *    null.h
  *
- *	Definition of null values.
+ *    Definition of null values.
  *
- *	Jeff Campbell
- *	2/7/18
+ *    Jeff Campbell
+ *    2/7/18
  *
  */
 

@@ -1,10 +1,10 @@
 /**
- *	timer.h
+ *    timer.h
  *
- *	Interface for timer.c.
+ *    Interface for timer.c.
  *
- *	Jeff Campbell
- *	1/31/18
+ *    Jeff Campbell
+ *    1/31/18
  *
  */
 

@@ -42,8 +42,8 @@ int16_t main(void)
     /* Enter OS */
     gvOS_enter();
 
-	/* Should never reach this return value */
-	return 1;
+    /* Should never reach this return value */
+    return 1;
 }
 
 /**
@@ -64,6 +64,6 @@ static void vInitHardware(void)
     /* Initialize clock */
     gvClock_init();
 
-	/* Initialize pins */
-	gvPins_init();
+    /* Initialize pins */
+    gvPins_init();
 }
