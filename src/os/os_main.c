@@ -102,7 +102,13 @@ static void vOS_initTasks(void)
 {
 	/* Configure display driver task */
 	xTaskPool[OS_TASK_DISPLAY].uwRateMs = 10u;
-	xTaskPool[OS_TASK_DISPLAY].uwTicks = 10u;
+	xTaskPool[OS_TASK_DISPLAY].uwTicks = 1u;
 	xTaskPool[OS_TASK_DISPLAY].pvInitFunction = NULL_PTR;
 	xTaskPool[OS_TASK_DISPLAY].pvStepFunction = &gvDisplay_process;
+
+	/* Configure pin update task */
+	xTaskPool[OS_TASK_PIN_UPDATE].uwRateMs = 5u;
+	xTaskPool[OS_TASK_PIN_UPDATE].uwTicks = 2u;
+	xTaskPool[OS_TASK_PIN_UPDATE].pvInitFunction = NULL_PTR;
+	xTaskPool[OS_TASK_PIN_UPDATE].pvStepFunction = &gvTasks_pinUpdate;
 }

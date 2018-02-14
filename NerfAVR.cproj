@@ -131,12 +131,6 @@
     <Compile Include="src\drivers\display_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\drivers\pin_driver.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\drivers\pin_driver.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\general\main.c">
       <SubType>compile</SubType>
     </Compile>

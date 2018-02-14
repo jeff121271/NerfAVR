@@ -15,6 +15,6 @@
 /* Definitions */
 
 /* Global Functions */
-extern void gvPrinter_Body(uint16_t uwCallRateMs);
+extern void gvTasks_pinUpdate(uint16_t uwCallRateMs);
 
 #endif /* #ifndef TASKS_H */

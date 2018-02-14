@@ -9,10 +9,17 @@
 
 /* Includes */
 #include <stdint.h>
+#include "pins.h"
 #include "tasks.h"
 
 /* Prototypes */
-
+void gvTasks_pinUpdate(uint16_t uwCallRateMs);
 
 /* Local Variables */
 
+
+void gvTasks_pinUpdate(uint16_t uwCallRateMs)
+{
+	/* Call pin update function */
+	gvPins_updateAll();
+}

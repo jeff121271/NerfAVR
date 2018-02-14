@@ -11,7 +11,7 @@
 /* Includes */
 #include <stdint.h>
 #include "clock.h"
-#include "pin_driver.h"
+#include "pins.h"
 #include "os_main.h"
 
 /* Prototypes */
@@ -64,8 +64,6 @@ static void vInitHardware(void)
     /* Initialize clock */
     gvClock_init();
 
-	/* Init pins */
-	gfPin_init(&pin_PA0);
-	gfPin_init(&pin_PA1);
-	gfPin_init(&pin_PB0);
+	/* Initialize pins */
+	gvPins_init();
 }
