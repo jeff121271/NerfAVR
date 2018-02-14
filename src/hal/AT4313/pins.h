@@ -63,5 +63,6 @@ typedef enum pin_index
 /* Global Functions */
 extern void gvPins_init(void);
 extern void gvPins_updateAll(void);
+extern void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
 
 #endif /* #ifndef PINS_H */

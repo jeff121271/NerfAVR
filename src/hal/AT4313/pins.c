@@ -17,6 +17,7 @@
 void gvPins_init(void);
 static void vPins_configAll(void);
 void gvPins_updateAll(void);
+void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
 
 /* Local Variables */
 
@@ -187,6 +188,34 @@ void gvPins_updateAll(void)
 					/* Do nothing */
 					break;
 			}
+		}
+	}
+}
+
+/**
+ *	void gvPins_control(pin_index_t, uint8_t ubLogic)
+ *
+ *	Description:
+ *		Sets the logic level of the selected pin.
+ *
+ *	Parameters:
+ *		ePinIdx = Index of pin to change
+ *		ubLogic = Logic level to use
+ *
+ *	Returns:
+ *		N/A
+ *
+ */
+void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic)
+{
+	/* Validate pin index */
+	if ( ePinIdx < PIN_NUMBER )
+	{
+		/* Make sure pin is in output mode */
+		if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
+		{
+			/* Set pin level */
+			digitalPins[ePinIdx].logicLevel = ubLogic;
 		}
 	}
 }
