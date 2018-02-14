@@ -25,13 +25,22 @@
 /* Pattern to select Port D */
 #define PIN_SELECT_PORTD 2u
 
+/* Data direction register value for input */
 #define PIN_DIRECTION_INPUT 0u
+
+/* Data direction register value for output */
 #define PIN_DIRECTION_OUTPUT 1u
 
+/* Value to disable pullup logic */
 #define PIN_PULLUP_DISABLE 0u
+
+/* Value to enable pullup logic */
 #define PIN_PULLUP_ENABLE 1u
 
+/* Value for logic level low */
 #define PIN_LOGIC_LOW 0u
+
+/* Value for logic level high */
 #define PIN_LOGIC_HIGH 1u
 
 /* Struct describing a pin's characteristics */
@@ -47,8 +56,8 @@ typedef struct pin_desc
 /* Enumeration of pin index values */
 typedef enum pin_index
 {
-	PIN_TEST_OUTPUT = 0u,
-	PIN_NUMBER
+	PIN_TEST_OUTPUT = 0u,	/* Test pin */
+	PIN_NUMBER				/* Number of pins */
 } pin_index_t;
 
 /* Global Functions */
