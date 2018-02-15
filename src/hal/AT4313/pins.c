@@ -16,8 +16,8 @@
  *  3       PD1     ---             Push motor extended photosensor
  *  4       PA1     ---             Push motor command #1
  *  5       PA0     ---             Push motor command #2
- *  6       PD2
- *  7       PD3
+ *  6       PD2     ---             Flywheel #1 feedback
+ *  7       PD3     ---             Flywheel #2 feedback
  *  8       PD4
  *  9       PD5     OC0B            Flywheel PWM #2
  * 10       GND     ---             Ground
@@ -114,6 +114,20 @@ void gvPins_init(void)
     digitalPins[PIN_FLYWHEEL_PWM_1].portSel         = PIN_SELECT_PORTB;
     digitalPins[PIN_FLYWHEEL_PWM_1].pullupEnable    = PIN_PULLUP_DISABLE;
     digitalPins[PIN_FLYWHEEL_PWM_1].pinNum          = 2u;
+
+    /* Flywheel #1 feedback (PD2) */
+    digitalPins[PIN_FLYWHEEL_FB_1].logicLevel       = PIN_LOGIC_LOW;
+    digitalPins[PIN_FLYWHEEL_FB_1].direction        = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_FLYWHEEL_FB_1].portSel          = PIN_SELECT_PORTD;
+    digitalPins[PIN_FLYWHEEL_FB_1].pullupEnable     = PIN_PULLUP_ENABLE;
+    digitalPins[PIN_FLYWHEEL_FB_1].pinNum           = 2u;
+
+    /* Flywheel #2 feedback (PD3) */
+    digitalPins[PIN_FLYWHEEL_FB_2].logicLevel       = PIN_LOGIC_LOW;
+    digitalPins[PIN_FLYWHEEL_FB_2].direction        = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_FLYWHEEL_FB_2].portSel          = PIN_SELECT_PORTD;
+    digitalPins[PIN_FLYWHEEL_FB_2].pullupEnable     = PIN_PULLUP_ENABLE;
+    digitalPins[PIN_FLYWHEEL_FB_2].pinNum           = 3u;
 
     /* Apply pin configurations */
     vPins_configAll();
