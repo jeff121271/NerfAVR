@@ -131,6 +131,12 @@
     <Compile Include="src\drivers\display_driver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\drivers\flywheel_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\drivers\flywheel_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\drivers\push_motor.c">
       <SubType>compile</SubType>
     </Compile>
