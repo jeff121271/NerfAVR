@@ -48,9 +48,13 @@ void gvPWM_init(void)
     TCCR0A |= 1u << WGM01;
     TCCR0A |= 1u << WGM00;
 
-    /* Set compare mode - clear OC0A on match, set at TOP */
+    /* Set 0C0A compare mode - clear on match, set at TOP */
     TCCR0A |= 1u << COM0A1;
     TCCR0A |= 0u << COM0A0;
+
+    /* Set 0C0B compare mode - clear on match, set at TOP */
+    TCCR0B |= 1u << COM0B1;
+    TCCR0B |= 0u << COM0B0;
 
     /* Clear PWM registers */
     OCR0A = 0u;
