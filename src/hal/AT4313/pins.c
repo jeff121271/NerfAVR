@@ -8,6 +8,32 @@
  *
  */
 
+/*
+ *          Pin Assignments
+ *  Pin     Port    Function        Description
+ *  1       PA2
+ *  2       PD0
+ *  3       PD1
+ *  4       PA1
+ *  5       PA0
+ *  6       PD2
+ *  7       PD3
+ *  8       PD4
+ *  9       PD5
+ * 10       ---     Ground          Ground
+ * 11       PD6
+ * 12       PB0
+ * 13       PB1
+ * 14       PB2
+ * 15       PB3
+ * 16       PB4
+ * 17       PB5
+ * 18       PB6
+ * 19       PB7
+ * 20       ---     Vcc             Power supply
+ *
+ */
+
 /* Includes */
 #include <avr/io.h>
 #include "pins.h"
