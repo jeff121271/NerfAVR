@@ -109,7 +109,7 @@ static void vOS_initTasks(void)
     /* Configure display driver task */
     xTaskPool[OS_TASK_DISPLAY].uwRateMs = 10u;
     xTaskPool[OS_TASK_DISPLAY].uwTicks = 1u;
-    xTaskPool[OS_TASK_DISPLAY].pvInitFunction = NULL_PTR;
+    xTaskPool[OS_TASK_DISPLAY].pvInitFunction = &gvDisplay_init;
     xTaskPool[OS_TASK_DISPLAY].pvStepFunction = &gvDisplay_process;
 
     /* Configure pin update task */
@@ -119,7 +119,7 @@ static void vOS_initTasks(void)
     xTaskPool[OS_TASK_PIN_UPDATE].pvStepFunction = &gvTasks_pinUpdate;
 
     /* Configure push motor state machine task */
-    xTaskPool[OS_TASK_PUSH_MOTOR].uwRateMs = 20u;
+    xTaskPool[OS_TASK_PUSH_MOTOR].uwRateMs = 10u;
     xTaskPool[OS_TASK_PUSH_MOTOR].uwTicks = 3u;
     xTaskPool[OS_TASK_PUSH_MOTOR].pvInitFunction = NULL_PTR;
     xTaskPool[OS_TASK_PUSH_MOTOR].pvStepFunction = &gvPush_process;

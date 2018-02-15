@@ -15,11 +15,31 @@
 #include "display_driver.h"
 
 /* Prototypes */
+void gvDisplay_init(void);
 void gvDisplay_process(uint16_t uwCallRateMs);
 void gvDisplay_setOutput(uint16_t uwNew);
 
 /* Local Variables */
 static uint16_t xuwDisplay = 0u;
+
+/**
+ *  void gvDisplay_init(void)
+ *
+ *  Description:
+ *      Initialization function for the 7seg display.
+ *
+ *  Parameters:
+ *      N/A
+ *
+ *  Returns:
+ *      N/A
+ *
+ */
+void gvDisplay_init(void)
+{
+    /* Call display init function */
+    TM1637_init();
+}
 
 /**
  *  void gvDisplay_process(uint16_t uwCallRateMs)
