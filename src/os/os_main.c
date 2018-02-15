@@ -15,6 +15,7 @@
 #include "tasks.h"
 #include "timer.h"
 #include "display_driver.h"
+#include "push_motor.h"
 #include "os_main.h"
 
 /* Prototypes */
@@ -116,4 +117,10 @@ static void vOS_initTasks(void)
     xTaskPool[OS_TASK_PIN_UPDATE].uwTicks = 2u;
     xTaskPool[OS_TASK_PIN_UPDATE].pvInitFunction = NULL_PTR;
     xTaskPool[OS_TASK_PIN_UPDATE].pvStepFunction = &gvTasks_pinUpdate;
+
+    /* Configure push motor state machine task */
+    xTaskPool[OS_TASK_PUSH_MOTOR].uwRateMs = 20u;
+    xTaskPool[OS_TASK_PUSH_MOTOR].uwTicks = 3u;
+    xTaskPool[OS_TASK_PUSH_MOTOR].pvInitFunction = NULL_PTR;
+    xTaskPool[OS_TASK_PUSH_MOTOR].pvStepFunction = &gvPush_process;
 }

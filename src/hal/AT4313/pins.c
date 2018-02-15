@@ -44,6 +44,7 @@ static void vPins_configAll(void);
 void gvPins_updateAll(void);
 void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
 void gvPins_toggle(pin_index_t ePinIdx);
+uint8_t gubPins_read(pin_index_t ePinIdx);
 
 /* Local Variables */
 
@@ -101,11 +102,11 @@ void gvPins_init(void)
     digitalPins[PIN_PUSH_CMD_2].pinNum          = 0u;
 
     /* Flywheel PWM #2 (PD5) */
-    digitalPins[PIN_FLYWHEEL_PWM_1].logicLevel      = PIN_LOGIC_LOW;
-    digitalPins[PIN_FLYWHEEL_PWM_1].direction       = PIN_DIRECTION_OUTPUT;
-    digitalPins[PIN_FLYWHEEL_PWM_1].portSel         = PIN_SELECT_PORTD;
-    digitalPins[PIN_FLYWHEEL_PWM_1].pullupEnable    = PIN_PULLUP_DISABLE;
-    digitalPins[PIN_FLYWHEEL_PWM_1].pinNum          = 5u;
+    digitalPins[PIN_FLYWHEEL_PWM_2].logicLevel      = PIN_LOGIC_LOW;
+    digitalPins[PIN_FLYWHEEL_PWM_2].direction       = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_FLYWHEEL_PWM_2].portSel         = PIN_SELECT_PORTD;
+    digitalPins[PIN_FLYWHEEL_PWM_2].pullupEnable    = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_FLYWHEEL_PWM_2].pinNum          = 5u;
 
     /* Flywheel PWM #1 (PB2) */
     digitalPins[PIN_FLYWHEEL_PWM_1].logicLevel      = PIN_LOGIC_LOW;
@@ -373,4 +374,36 @@ void gvPins_toggle(pin_index_t ePinIdx)
             digitalPins[ePinIdx].logicLevel = PIN_LOGIC_HIGH;
         }
     }
+}
+
+/**
+ *  uint8_t gubPins_read(pin_index_t ePinIdx)
+ *
+ *  Description:
+ *      Reads the current logic level of a pin.
+ *
+ *  Parameters:
+ *      ePinIdx = Pin to read
+ *
+ *  Returns:
+ *      The logic level of the pin.
+ *
+ */
+uint8_t gubPins_read(pin_index_t ePinIdx)
+{
+    uint8_t ubLevel = 0xFFu;
+
+    /* Validate pin index */
+    if ( ePinIdx < PIN_COUNT )
+    {
+        /* Validate pin is in input mode */
+        if ( PIN_DIRECTION_INPUT == digitalPins[ePinIdx].direction )
+        {
+            /* Read pin level */
+            ubLevel = digitalPins[ePinIdx].logicLevel;
+        }
+    }
+
+    /* Return result */
+    return ubLevel;
 }

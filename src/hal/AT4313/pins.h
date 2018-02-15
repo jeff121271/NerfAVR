@@ -71,5 +71,6 @@ extern void gvPins_init(void);
 extern void gvPins_updateAll(void);
 extern void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
 extern void gvPins_toggle(pin_index_t ePinIdx);
+extern uint8_t gubPins_read(pin_index_t ePinIdx);
 
 #endif /* #ifndef PINS_H */
