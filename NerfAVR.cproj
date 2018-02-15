@@ -149,6 +149,12 @@
     <Compile Include="src\hal\AT4313\pins.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\hal\AT4313\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hal\AT4313\pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\hal\AT4313\timer.c">
       <SubType>compile</SubType>
     </Compile>
