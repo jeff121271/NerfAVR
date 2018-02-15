@@ -22,6 +22,8 @@
 void gvPWM_init(void);
 void gvPWM_setCmd1(uint8_t ubCmd);
 void gvPWM_setCmd2(uint8_t ubCmd);
+void gvPWM_increment(void);
+void gvPWM_decrement(void);
 
 /* Local Variables */
 
@@ -48,11 +50,11 @@ void gvPWM_init(void)
     TCCR0A |= 1u << WGM01;
     TCCR0A |= 1u << WGM00;
 
-    /* Set 0C0A compare mode - clear on match, set at TOP */
+    /* Set OC0A compare mode - clear on match, set at TOP */
     TCCR0A |= 1u << COM0A1;
     TCCR0A |= 0u << COM0A0;
 
-    /* Set 0C0B compare mode - clear on match, set at TOP */
+    /* Set OC0B compare mode - clear on match, set at TOP */
     TCCR0B |= 1u << COM0B1;
     TCCR0B |= 0u << COM0B0;
 
@@ -97,4 +99,50 @@ void gvPWM_setCmd2(uint8_t ubCmd)
 {
     /* Update PWM register */
     OCR0B = ubCmd;
+}
+
+/**
+ *  void gvPWM_increment(void)
+ *
+ *  Description:
+ *      Increments the slave flywheel PWM signal.
+ *
+ *  Parameters:
+ *      N/A
+ *
+ *  Returns:
+ *      N/A
+ *
+ */
+void gvPWM_increment(void)
+{
+    /* Check that value is not maxed out */
+    if ( PWM_MAX_COMP_VALUE > OCR0B )
+    {
+        /* Increment OC0B compare register */
+        OCR0B = OCR0B + 1u;
+    }
+}
+
+/**
+ *  void gvPWM_decrement(void)
+ *
+ *  Description:
+ *      Decrements the slave flywheel PWM signal.
+ *
+ *  Parameters:
+ *      N/A
+ *
+ *  Returns:
+ *      N/A
+ *
+ */
+void gvPWM_decrement(void)
+{
+    /* Check for underflow */
+    if ( PWM_MIN_COMP_VALUE < OCR0B )
+    {
+        /* Decrement OC0B compare register */
+        OCR0B = OCR0B - 1u;
+    }
 }

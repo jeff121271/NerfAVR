@@ -32,6 +32,21 @@ void gvTasks_pinUpdate(uint16_t uwCallRateMs);
  */
 void gvTasks_pinUpdate(uint16_t uwCallRateMs)
 {
+    static uint16_t suwTimerMs = 0u;
+
+    /* Update timer */
+    suwTimerMs += uwCallRateMs;
+
+    /* Check for heartbeat time */
+    if ( suwTimerMs >= TASKS_HEARTBEAT_RATE_MS )
+    {
+        /* Toggle heartbeat bit */
+        gvPins_toggle(PIN_HEARTBEAT);
+
+        /* Clear timer */
+        suwTimerMs = 0u;
+    }
+
     /* Call pin update function */
     gvPins_updateAll();
 }

@@ -43,6 +43,7 @@ void gvPins_init(void);
 static void vPins_configAll(void);
 void gvPins_updateAll(void);
 void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
+void gvPins_toggle(pin_index_t ePinIdx);
 
 /* Local Variables */
 
@@ -316,6 +317,60 @@ void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic)
         {
             /* Set pin level */
             digitalPins[ePinIdx].logicLevel = ubLogic;
+        }
+    }
+}
+
+/**
+ *  void gvPins_toggle(pin_index_t ePinIdx)
+ *
+ *  Description:
+ *      Toggles the selected output pin.
+ *
+ *  Parameters:
+ *      ePinIdx = Pin to toggle
+ *
+ *  Returns:
+ *      N/A
+ *
+ */
+void gvPins_toggle(pin_index_t ePinIdx)
+{
+    /* Validate pin index */
+    if ( ePinIdx < PIN_COUNT )
+    {
+        /* Make sure pin is in output mode */
+        if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
+        {
+            /* Write to the appropriate PIN register */
+            switch (digitalPins[ePinIdx].portSel)
+            {
+                case PIN_SELECT_PORTA:
+                    PINA |= 1u << digitalPins[ePinIdx].pinNum;
+                    break;
+
+                case PIN_SELECT_PORTB:
+                    PINB |= 1u << digitalPins[ePinIdx].pinNum;
+                    break;
+
+                case PIN_SELECT_PORTD:
+                    PIND |= 1u << digitalPins[ePinIdx].pinNum;
+                    break;
+
+                default:
+                    /* Do nothing */
+                    break;
+            }
+        }
+
+        /* Toggle logic status in structure */
+        if ( PIN_LOGIC_HIGH == digitalPins[ePinIdx].logicLevel )
+        {
+            digitalPins[ePinIdx].logicLevel = PIN_LOGIC_LOW;
+        }
+        else
+        {
+            digitalPins[ePinIdx].logicLevel = PIN_LOGIC_HIGH;
         }
     }
 }

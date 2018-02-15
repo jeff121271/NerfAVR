@@ -89,18 +89,18 @@ void gvOS_enter(void)
 }
 
 /**
- *    static void vOS_initTasks(void)
+ *  static void vOS_initTasks(void)
  *
- *    Description:
- *        Initializes all tasks.  Value of uwTicks should be
- *        staggered to prevent tasks from having to execute
- *        in the same 1ms period.
+ *  Description:
+ *      Initializes all tasks.  Value of uwTicks should be
+ *      staggered to prevent tasks from having to execute
+ *      in the same 1ms period.
  *
- *    Parameters:
- *        N/A
+ *  Parameters:
+ *      N/A
  *
- *    Returns:
- *        N/A
+ *  Returns:
+ *      N/A
  *
  */
 static void vOS_initTasks(void)

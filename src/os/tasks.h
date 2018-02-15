@@ -14,6 +14,9 @@
 
 /* Definitions */
 
+/* Rate, in ms, of heartbeat pin toggle */
+#define TASKS_HEARTBEAT_RATE_MS 100u
+
 /* Global Functions */
 extern void gvTasks_pinUpdate(uint16_t uwCallRateMs);
 

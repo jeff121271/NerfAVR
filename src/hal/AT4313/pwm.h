@@ -12,8 +12,12 @@
 #define PWM_H
 
 /* Includes */
+#include <stdint.h>
 
 /* Defines */
+
+/* Min value of the 8-bit compare register */
+#define PWM_MIN_COMP_VALUE 0u
 
 /* Max value of the 8-bit compare register */
 #define PWM_MAX_COMP_VALUE 255u
@@ -25,5 +29,7 @@
 extern void gvPWM_init(void);
 extern void gvPWM_setCmd1(uint8_t ubCmd);
 extern void gvPWM_setCmd2(uint8_t ubCmd);
+extern void gvPWM_increment(void);
+extern void gvPWM_decrement(void);
 
 #endif /* #ifndef PWM_H */
