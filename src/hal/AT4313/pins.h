@@ -65,6 +65,7 @@ typedef enum pin_index
     PIN_FLYWHEEL_PWM_2,     /* Flywheel PWM #2 */
     PIN_FLYWHEEL_FB_1,      /* Flywheel #1 feedback */
     PIN_FLYWHEEL_FB_2,      /* Flywheel #2 feedback */
+    PIN_TRIGGER,            /* Trigger input */
     PIN_COUNT               /* Number of pins */
 } pin_index_t;
 

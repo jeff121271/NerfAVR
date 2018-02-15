@@ -18,7 +18,7 @@
  *  5       PA0     ---             Push motor command #2
  *  6       PD2     ---             Flywheel #1 feedback
  *  7       PD3     ---             Flywheel #2 feedback
- *  8       PD4
+ *  8       PD4     ---             Trigger
  *  9       PD5     OC0B            Flywheel PWM #2
  * 10       GND     ---             Ground
  * 11       PD6
@@ -128,6 +128,13 @@ void gvPins_init(void)
     digitalPins[PIN_FLYWHEEL_FB_2].portSel          = PIN_SELECT_PORTD;
     digitalPins[PIN_FLYWHEEL_FB_2].pullupEnable     = PIN_PULLUP_ENABLE;
     digitalPins[PIN_FLYWHEEL_FB_2].pinNum           = 3u;
+
+    /* Trigger input (PD4) */
+    digitalPins[PIN_TRIGGER].logicLevel     = PIN_LOGIC_LOW;
+    digitalPins[PIN_TRIGGER].direction      = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_TRIGGER].portSel        = PIN_SELECT_PORTD;
+    digitalPins[PIN_TRIGGER].pullupEnable   = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_TRIGGER].pinNum         = 4u;
 
     /* Apply pin configurations */
     vPins_configAll();
