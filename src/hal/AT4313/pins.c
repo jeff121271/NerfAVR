@@ -11,7 +11,7 @@
 /*
  *          Pin Assignments
  *  Pin     Port    Function        Description
- *  1       PA2
+ *  1       PA2     PA2             Heartbeat pin
  *  2       PD0
  *  3       PD1
  *  4       PA1
@@ -19,12 +19,12 @@
  *  6       PD2
  *  7       PD3
  *  8       PD4
- *  9       PD5
+ *  9       PD5     OC0B            Flywheel PWM #2
  * 10       ---     Ground          Ground
  * 11       PD6
  * 12       PB0
  * 13       PB1
- * 14       PB2
+ * 14       PB2     OC0A            Flywheel PWM #1
  * 15       PB3
  * 16       PB4
  * 17       PB5
@@ -64,12 +64,12 @@ static pin_desc_t digitalPins[PIN_NUMBER];
  */
 void gvPins_init(void)
 {
-    /* Configure Test output pin */
-    digitalPins[PIN_TEST_OUTPUT].logicLevel = PIN_LOGIC_LOW;
-    digitalPins[PIN_TEST_OUTPUT].direction = PIN_DIRECTION_OUTPUT;
-    digitalPins[PIN_TEST_OUTPUT].portSel = PIN_SELECT_PORTA;
-    digitalPins[PIN_TEST_OUTPUT].pullupEnable = PIN_PULLUP_DISABLE;
-    digitalPins[PIN_TEST_OUTPUT].pinNum = 0u;
+    /* Heartbeat pin */
+    digitalPins[PIN_HEARTBEAT].logicLevel = PIN_LOGIC_LOW;
+    digitalPins[PIN_HEARTBEAT].direction = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_HEARTBEAT].portSel = PIN_SELECT_PORTA;
+    digitalPins[PIN_HEARTBEAT].pullupEnable = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_HEARTBEAT].pinNum = 2u;
 
     /* Apply pin configurations */
     vPins_configAll();

@@ -56,7 +56,7 @@ typedef struct pin_desc
 /* Enumeration of pin index values */
 typedef enum pin_index
 {
-    PIN_TEST_OUTPUT = 0u,   /* Test pin */
+    PIN_HEARTBEAT = 0,      /* Heartbeat pin */
     PIN_NUMBER              /* Number of pins */
 } pin_index_t;
 
