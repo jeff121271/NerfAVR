@@ -10,17 +10,17 @@
 
 /*
  *          Pin Assignments
- *  Pin     Port    Function        Description
- *  1       PA2     PA2             Heartbeat pin
- *  2       PD0
- *  3       PD1
- *  4       PA1
- *  5       PA0
+ *  Pin     Port    Alt. Function   Description
+ *  1       PA2     ---             Heartbeat pin
+ *  2       PD0     ---             Dart-in-chamber photosensor
+ *  3       PD1     ---             Push motor extended photosensor
+ *  4       PA1     ---             Push motor command #1
+ *  5       PA0     ---             Push motor command #2
  *  6       PD2
  *  7       PD3
  *  8       PD4
  *  9       PD5     OC0B            Flywheel PWM #2
- * 10       ---     Ground          Ground
+ * 10       GND     ---             Ground
  * 11       PD6
  * 12       PB0
  * 13       PB1
@@ -30,7 +30,7 @@
  * 17       PB5
  * 18       PB6
  * 19       PB7
- * 20       ---     Vcc             Power supply
+ * 20       VCC     ---             Power supply
  *
  */
 
@@ -47,7 +47,7 @@ void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
 /* Local Variables */
 
 /* Array of pin descriptions */
-static pin_desc_t digitalPins[PIN_NUMBER];
+static pin_desc_t digitalPins[PIN_COUNT];
 
 /**
  *    void gvPins_init(void)
@@ -64,12 +64,54 @@ static pin_desc_t digitalPins[PIN_NUMBER];
  */
 void gvPins_init(void)
 {
-    /* Heartbeat pin */
-    digitalPins[PIN_HEARTBEAT].logicLevel = PIN_LOGIC_LOW;
-    digitalPins[PIN_HEARTBEAT].direction = PIN_DIRECTION_OUTPUT;
-    digitalPins[PIN_HEARTBEAT].portSel = PIN_SELECT_PORTA;
-    digitalPins[PIN_HEARTBEAT].pullupEnable = PIN_PULLUP_DISABLE;
-    digitalPins[PIN_HEARTBEAT].pinNum = 2u;
+    /* Heartbeat pin (PA2) */
+    digitalPins[PIN_HEARTBEAT].logicLevel       = PIN_LOGIC_LOW;
+    digitalPins[PIN_HEARTBEAT].direction        = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_HEARTBEAT].portSel          = PIN_SELECT_PORTA;
+    digitalPins[PIN_HEARTBEAT].pullupEnable     = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_HEARTBEAT].pinNum           = 2u;
+
+    /* Dart in chamber sensor (PD0) */
+    digitalPins[PIN_DART_CHAMBER].logicLevel    = PIN_LOGIC_HIGH;
+    digitalPins[PIN_DART_CHAMBER].direction     = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_DART_CHAMBER].portSel       = PIN_SELECT_PORTD;
+    digitalPins[PIN_DART_CHAMBER].pullupEnable  = PIN_PULLUP_ENABLE;
+    digitalPins[PIN_DART_CHAMBER].pinNum        = 0u;
+
+    /* Push motor extended sensor (PD1) */
+    digitalPins[PIN_PUSH_EXTEND].logicLevel     = PIN_LOGIC_HIGH;
+    digitalPins[PIN_PUSH_EXTEND].direction      = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_PUSH_EXTEND].portSel        = PIN_SELECT_PORTD;
+    digitalPins[PIN_PUSH_EXTEND].pullupEnable   = PIN_PULLUP_ENABLE;
+    digitalPins[PIN_PUSH_EXTEND].pinNum         = 1u;
+
+    /* Push motor command #1 (PA1) */
+    digitalPins[PIN_PUSH_CMD_1].logicLevel      = PIN_LOGIC_LOW;
+    digitalPins[PIN_PUSH_CMD_1].direction       = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_PUSH_CMD_1].portSel         = PIN_SELECT_PORTA;
+    digitalPins[PIN_PUSH_CMD_1].pullupEnable    = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_PUSH_CMD_1].pinNum          = 1u;
+
+    /* Push motor command #2 (PA0) */
+    digitalPins[PIN_PUSH_CMD_2].logicLevel      = PIN_LOGIC_LOW;
+    digitalPins[PIN_PUSH_CMD_2].direction       = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_PUSH_CMD_2].portSel         = PIN_SELECT_PORTA;
+    digitalPins[PIN_PUSH_CMD_2].pullupEnable    = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_PUSH_CMD_2].pinNum          = 0u;
+
+    /* Flywheel PWM #2 (PD5) */
+    digitalPins[PIN_FLYWHEEL_PWM_1].logicLevel      = PIN_LOGIC_LOW;
+    digitalPins[PIN_FLYWHEEL_PWM_1].direction       = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_FLYWHEEL_PWM_1].portSel         = PIN_SELECT_PORTD;
+    digitalPins[PIN_FLYWHEEL_PWM_1].pullupEnable    = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_FLYWHEEL_PWM_1].pinNum          = 5u;
+
+    /* Flywheel PWM #1 (PB2) */
+    digitalPins[PIN_FLYWHEEL_PWM_1].logicLevel      = PIN_LOGIC_LOW;
+    digitalPins[PIN_FLYWHEEL_PWM_1].direction       = PIN_DIRECTION_OUTPUT;
+    digitalPins[PIN_FLYWHEEL_PWM_1].portSel         = PIN_SELECT_PORTB;
+    digitalPins[PIN_FLYWHEEL_PWM_1].pullupEnable    = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_FLYWHEEL_PWM_1].pinNum          = 2u;
 
     /* Apply pin configurations */
     vPins_configAll();
@@ -96,7 +138,7 @@ static void vPins_configAll(void)
     pin_index_t ePinIdx;
 
     /* Loop over all pins */
-    for ( ePinIdx = (pin_index_t)0u; ePinIdx < PIN_NUMBER; ePinIdx++ )
+    for ( ePinIdx = (pin_index_t)0u; ePinIdx < PIN_COUNT; ePinIdx++ )
     {
         /* Process output pins */
         if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
@@ -129,14 +171,26 @@ static void vPins_configAll(void)
             {
                 case PIN_SELECT_PORTA:
                     DDRA &= (uint8_t)(~(1u << digitalPins[ePinIdx].pinNum));
+                    if ( PIN_PULLUP_ENABLE == digitalPins[ePinIdx].pullupEnable )
+                    {
+                        PORTA |= (1u << digitalPins[ePinIdx].pinNum);
+                    }
                     break;
 
                 case PIN_SELECT_PORTB:
                     DDRB &= (uint8_t)(~(1u << digitalPins[ePinIdx].pinNum));
+                    if ( PIN_PULLUP_ENABLE == digitalPins[ePinIdx].pullupEnable )
+                    {
+                        PORTB |= (1u << digitalPins[ePinIdx].pinNum);
+                    }
                     break;
 
                 case PIN_SELECT_PORTD:
                     DDRD &= (uint8_t)(~(1u << digitalPins[ePinIdx].pinNum));
+                    if ( PIN_PULLUP_ENABLE == digitalPins[ePinIdx].pullupEnable )
+                    {
+                        PORTD |= (1u << digitalPins[ePinIdx].pinNum);
+                    }
                     break;
 
                 default:
@@ -166,7 +220,7 @@ void gvPins_updateAll(void)
     pin_index_t ePinIdx;
 
     /* Loop over each pin object */
-    for ( ePinIdx = (pin_index_t)0u; ePinIdx < PIN_NUMBER; ePinIdx++ )
+    for ( ePinIdx = (pin_index_t)0u; ePinIdx < PIN_COUNT; ePinIdx++ )
     {
         /* Process output pin */
         if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
@@ -219,15 +273,15 @@ void gvPins_updateAll(void)
             switch (digitalPins[ePinIdx].portSel)
             {
                 case PIN_SELECT_PORTA:
-                    digitalPins[ePinIdx].logicLevel = ((PORTA & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
+                    digitalPins[ePinIdx].logicLevel = ((PINA & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
                     break;
 
                 case PIN_SELECT_PORTB:
-                    digitalPins[ePinIdx].logicLevel = ((PORTB & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
+                    digitalPins[ePinIdx].logicLevel = ((PINB & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
                     break;
 
                 case PIN_SELECT_PORTD:
-                    digitalPins[ePinIdx].logicLevel = ((PORTD & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
+                    digitalPins[ePinIdx].logicLevel = ((PIND & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
                     break;
 
                 default:
@@ -255,7 +309,7 @@ void gvPins_updateAll(void)
 void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic)
 {
     /* Validate pin index */
-    if ( ePinIdx < PIN_NUMBER )
+    if ( ePinIdx < PIN_COUNT )
     {
         /* Make sure pin is in output mode */
         if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
