@@ -15,6 +15,12 @@
 
 /* Defines */
 
+/* Value to select flywheel #1 */
+#define FLYWHEEL_SELECT_1 1u
+
+/* Value to select flywheel #2 */
+#define FLYWHEEL_SELECT_2 2u
+
 /* Enumeration of flywheel driver states */
 typedef enum flywheel_states
 {
@@ -26,5 +32,6 @@ typedef enum flywheel_states
 
 /* Global Functions */
 extern void gvFlywheel_process(uint16_t uwCallRateMs);
+extern void gvFlywheel_intHandler(uint8_t ubSelect);
 
 #endif /* #ifndef FLYWHEEL_DRIVER_H */

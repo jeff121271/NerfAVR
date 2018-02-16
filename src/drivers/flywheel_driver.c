@@ -16,6 +16,7 @@
 
 /* Prototypes */
 void gvFlywheel_process(uint16_t uwCallRateMs);
+void gvFlywheel_intHandler(uint8_t ubSelect);
 
 /* Local Variables */
 
@@ -118,5 +119,32 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         default:
             break;
+    }
+}
+
+/**
+ *  void gvFlywheel_intHandler(uint8_t ubSelect)
+ *
+ *  Descripton:
+ *      Interrupt handler for a flywheel encoder.  Increments
+ *      the appropriate encoder counter.
+ *
+ *  Parameters:
+ *      ubSelect = Selects which encoder to count.
+ *
+ *  Returns:
+ *      N/A
+ *
+ */
+void gvFlywheel_intHandler(uint8_t ubSelect)
+{
+    /* Choose which flywheel to increment */
+    if ( FLYWHEEL_SELECT_1 == ubSelect )
+    {
+        xubWheel1Counts++;
+    }
+    else
+    {
+        xubWheel2Counts++;
     }
 }

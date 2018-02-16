@@ -17,5 +17,7 @@
 
 /* Global Functions */
 extern void gvINT_init(void);
+extern void gvINT_enableFlywheel(void);
+extern void gvINT_disableFlywheel(void);
 
 #endif /* #ifndef INTERRUPT_H */
