@@ -9,6 +9,8 @@
  */ 
 
 /* Includes */
+#include <stdint.h>
+#include "interrupt.h"
 
 /* Prototypes */
 void gvINT_init(void);
@@ -31,5 +33,5 @@ void gvINT_init(void);
  */
 void gvINT_init(void)
 {
-
+    // TODO: Add interrupts... so far the only purpose I can think of is the quad encoders
 }
