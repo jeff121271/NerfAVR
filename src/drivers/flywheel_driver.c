@@ -8,12 +8,12 @@
  *      Assuming 4 counts per revolution.
  *
  *      Speed (RPM) = Counts * (Calc. Interval) * 60 / 4000
- *  
+ *
  *
  *  Jeff Campbell
  *  2/15/18
  *
- */ 
+ */
 
 /* Includes */
 #include <stdint.h>
@@ -155,7 +155,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_IDLE:
             /* If trigger is pressed, ramp up */
-            if ( PIN_LOGIC_HIGH == gubPins_read(PIN_TRIGGER) )
+            if ( PIN_LOGIC_HIGH == gubPins_read(PIN_WHEEL_CMD) )
             {
                 seState = FLY_STATE_RAMP_UP;
             }
@@ -163,7 +163,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_RAMP_UP:
             /* If trigger is released, go to idle */
-            if ( PIN_LOGIC_LOW == gubPins_read(PIN_TRIGGER) )
+            if ( PIN_LOGIC_LOW == gubPins_read(PIN_WHEEL_CMD) )
             {
                 seState = FLY_STATE_IDLE;
             }
@@ -179,7 +179,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_MAINTAIN:
             /* Only exit when trigger is released */
-            if ( PIN_LOGIC_LOW == gubPins_read(PIN_TRIGGER) )
+            if ( PIN_LOGIC_LOW == gubPins_read(PIN_WHEEL_CMD) )
             {
                 seState = FLY_STATE_IDLE;
             }

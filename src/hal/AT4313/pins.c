@@ -21,7 +21,7 @@
  *  8       PD4     ---             Trigger
  *  9       PD5     OC0B            Flywheel PWM #2
  * 10       GND     ---             Ground
- * 11       PD6
+ * 11       PD6     ---             Flywheel enable input
  * 12       PB0     ---             TM1637 Data pin
  * 13       PB1     ---             TM1637 Clock pin
  * 14       PB2     OC0A            Flywheel PWM #1
@@ -135,6 +135,13 @@ void gvPins_init(void)
     digitalPins[PIN_TRIGGER].portSel        = PIN_SELECT_PORTD;
     digitalPins[PIN_TRIGGER].pullupEnable   = PIN_PULLUP_DISABLE;
     digitalPins[PIN_TRIGGER].pinNum         = 4u;
+
+    /* Flywheel enable input (PD6) */
+    digitalPins[PIN_WHEEL_CMD].logicLevel   = PIN_LOGIC_LOW;
+    digitalPins[PIN_WHEEL_CMD].direction    = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_WHEEL_CMD].portSel      = PIN_SELECT_PORTD;
+    digitalPins[PIN_WHEEL_CMD].pullupEnable = PIN_PULLUP_DISABLE;
+    digitalPins[PIN_WHEEL_CMD].pinNum       = 6u;
 
     /* Apply pin configurations */
     vPins_configAll();

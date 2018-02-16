@@ -6,7 +6,7 @@
  *  Jeff Campbell
  *  2/15/18
  *
- */ 
+ */
 
 /* Includes */
 #include <avr/io.h>
@@ -58,7 +58,7 @@ void gvINT_init(void)
  *
  *  Parameters:
  *      N/A
- * 
+ *
  *  Returns:
  *      N/A
  *
