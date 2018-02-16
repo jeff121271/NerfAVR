@@ -16,6 +16,7 @@
 #include "timer.h"
 #include "display_driver.h"
 #include "push_motor.h"
+#include "flywheel_driver.h"
 #include "os_main.h"
 
 /* Prototypes */
@@ -123,4 +124,10 @@ static void vOS_initTasks(void)
     xTaskPool[OS_TASK_PUSH_MOTOR].uwTicks = 3u;
     xTaskPool[OS_TASK_PUSH_MOTOR].pvInitFunction = NULL_PTR;
     xTaskPool[OS_TASK_PUSH_MOTOR].pvStepFunction = &gvPush_process;
+
+    /* Configure flywheel driver task */
+    xTaskPool[OS_TASK_FLYWHEEL].uwRateMs = 5u;
+    xTaskPool[OS_TASK_FLYWHEEL].uwTicks = 4u;
+    xTaskPool[OS_TASK_FLYWHEEL].pvInitFunction = NULL_PTR;
+    xTaskPool[OS_TASK_FLYWHEEL].pvStepFunction = &gvFlywheel_process;
 }
