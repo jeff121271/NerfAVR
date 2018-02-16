@@ -24,6 +24,9 @@
 /* Time, in ms, between adjustments to slave PWM */
 #define FLYWHEEL_ADJUST_TIME_MS 250u
 
+/* Time, in ms, between speed calculations */
+#define FLYWHEEL_CALCULATION_TIME_MS 1000u
+
 /* Enumeration of flywheel driver states */
 typedef enum flywheel_states
 {

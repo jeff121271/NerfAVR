@@ -3,6 +3,13 @@
  *
  *  Driver for the flywheel system.
  *
+ *  Calculations:
+ *
+ *      Assuming 4 counts per revolution.
+ *
+ *      Speed (RPM) = Counts * (Calc. Interval) * 60 / 4000
+ *  
+ *
  *  Jeff Campbell
  *  2/15/18
  *
@@ -12,6 +19,7 @@
 #include <stdint.h>
 #include "pins.h"
 #include "pwm.h"
+#include "interrupt.h"
 #include "flywheel_driver.h"
 
 /* Prototypes */
@@ -20,14 +28,23 @@ void gvFlywheel_intHandler(uint8_t ubSelect);
 
 /* Local Variables */
 
-/* Desired flywheel speed (in terms of PWM command) */
-static uint8_t xubDesiredSpeed = 0u;
+/* Desired flywheel speed (in RPM) */
+static uint16_t xuwDesiredSpeed = 0u;
+
+/* Desired flywheel speed (in PWM command) */
+static uint8_t xubPwmCmd = 0u;
 
 /* Raw quadrature counts from flywheel #1 */
-static volatile uint8_t xubWheel1Counts = 0u;
+static volatile uint16_t xuwWheel1Counts = 0u;
 
 /* Raw quadrature counts from flywheel #2 */
-static volatile uint8_t xubWheel2Counts = 0u;
+static volatile uint16_t xuwWheel2Counts = 0u;
+
+/* Flywheel #1 speed */
+static uint16_t xuwWheel1Speed = 0u;
+
+/* Flywheel #2 speed */
+static uint16_t xuwWheel2Speed = 0u;
 
 /**
  *  void gvFlywheel_process(uint16_t uwCallRateMs)
@@ -46,9 +63,11 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 {
     static flywheel_states_t seState = FLY_STATE_INIT;
     static uint16_t suwTimerMs = 0u;
+    static uint16_t suwCalculationTimerMs = 0u;
 
-    /* Increment timer */
+    /* Increment timers */
     suwTimerMs += uwCallRateMs;
+    suwCalculationTimerMs += uwCallRateMs;
 
     /* Process state actions */
     switch (seState)
@@ -66,8 +85,8 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             gvINT_disableFlywheel();
 
             /* Clear counters */
-            xubWheel1Counts = 0u;
-            xubWheel2Counts = 0u;
+            xuwWheel1Counts = 0u;
+            xuwWheel2Counts = 0u;
 
             /* Clear timer */
             suwTimerMs = 0u;
@@ -75,19 +94,27 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_RAMP_UP:
             /* Drive both motors with commanded speed */
-            gvPWM_setCmd1(xubDesiredSpeed);
-            gvPWM_setCmd2(xubDesiredSpeed);
+            gvPWM_setCmd1(xubPwmCmd);
+            gvPWM_setCmd2(xubPwmCmd);
+
+            /* Check for speed calculation */
+            if ( suwCalculationTimerMs >= FLYWHEEL_CALCULATION_TIME_MS )
+            {
+                /* Clear calculation timer */
+                suwCalculationTimerMs = 0u;
+
+                /* Update speeds */
+                xuwWheel1Speed = xuwWheel1Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
+                xuwWheel2Speed = xuwWheel2Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
+            }
             break;
 
         case FLY_STATE_MAINTAIN:
-            /* Set master command */
-            gvPWM_setCmd1(xubDesiredSpeed);
-
             /* Check if it's time to adjust the flywheel */
             if ( suwTimerMs > FLYWHEEL_ADJUST_TIME_MS)
             {
                 /* Increase slave command if it is slower */
-                if ( xubWheel1Counts > xubWheel2Counts )
+                if ( xuwWheel1Counts > xuwWheel2Counts )
                 {
                     gvPWM_increment();
                 }
@@ -99,6 +126,17 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
                 /* Clear timer */
                 suwTimerMs = 0u;
+            }
+
+            /* Check for speed calculation */
+            if ( suwCalculationTimerMs >= FLYWHEEL_CALCULATION_TIME_MS )
+            {
+                /* Clear calculation timer */
+                suwCalculationTimerMs = 0u;
+
+                /* Update speeds */
+                xuwWheel1Speed = xuwWheel1Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
+                xuwWheel2Speed = xuwWheel2Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
             }
             break;
 
@@ -132,7 +170,10 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             else
             {
                 /* Otherwise, check if master is at speed */
-                // TODO: speed calculation
+                if ( 1u ) // TODO: The math here
+                {
+                    seState = FLY_STATE_MAINTAIN;
+                }
             }
             break;
 
@@ -168,10 +209,10 @@ void gvFlywheel_intHandler(uint8_t ubSelect)
     /* Choose which flywheel to increment */
     if ( FLYWHEEL_SELECT_1 == ubSelect )
     {
-        xubWheel1Counts++;
+        xuwWheel1Counts++;
     }
     else
     {
-        xubWheel2Counts++;
+        xuwWheel2Counts++;
     }
 }
