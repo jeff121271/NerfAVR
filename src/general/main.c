@@ -13,6 +13,7 @@
 #include "clock.h"
 #include "pins.h"
 #include "pwm.h"
+#include "interrupt.h"
 #include "os_main.h"
 
 /* Prototypes */
@@ -70,4 +71,7 @@ static void vInitHardware(void)
 
     /* Initialize PWM */
     gvPWM_init();
+
+    /* Set up interrupts */
+    gvINT_init();
 }

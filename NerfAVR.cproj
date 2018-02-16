@@ -155,6 +155,12 @@
     <Compile Include="src\hal\AT4313\clock.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\hal\AT4313\interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hal\AT4313\interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\hal\AT4313\pins.c">
       <SubType>compile</SubType>
     </Compile>
