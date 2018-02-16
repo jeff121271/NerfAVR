@@ -45,6 +45,10 @@ static volatile uint8_t xubWheel2Counts = 0u;
 void gvFlywheel_process(uint16_t uwCallRateMs)
 {
     static flywheel_states_t seState = FLY_STATE_INIT;
+    static uint16_t suwTimerMs = 0u;
+
+    /* Increment timer */
+    suwTimerMs += uwCallRateMs;
 
     /* Process state actions */
     switch (seState)
@@ -57,6 +61,16 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             /* Make sure motors are turned off */
             gvPWM_setCmd1(0u);
             gvPWM_setCmd2(0u);
+
+            /* Disable interrupts */
+            gvINT_disableFlywheel();
+
+            /* Clear counters */
+            xubWheel1Counts = 0u;
+            xubWheel2Counts = 0u;
+
+            /* Clear timer */
+            suwTimerMs = 0u;
             break;
 
         case FLY_STATE_RAMP_UP:
@@ -69,10 +83,23 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             /* Set master command */
             gvPWM_setCmd1(xubDesiredSpeed);
 
-            /* Increase slave command if it is slower */
+            /* Check if it's time to adjust the flywheel */
+            if ( suwTimerMs > FLYWHEEL_ADJUST_TIME_MS)
+            {
+                /* Increase slave command if it is slower */
+                if ( xubWheel1Counts > xubWheel2Counts )
+                {
+                    gvPWM_increment();
+                }
+                /* Otherwise, decrement it */
+                else
+                {
+                    gvPWM_decrement();
+                }
 
-            /* Otherwise, decrement it */
-
+                /* Clear timer */
+                suwTimerMs = 0u;
+            }
             break;
 
         default:

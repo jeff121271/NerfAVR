@@ -21,6 +21,9 @@
 /* Value to select flywheel #2 */
 #define FLYWHEEL_SELECT_2 2u
 
+/* Time, in ms, between adjustments to slave PWM */
+#define FLYWHEEL_ADJUST_TIME_MS 250u
+
 /* Enumeration of flywheel driver states */
 typedef enum flywheel_states
 {

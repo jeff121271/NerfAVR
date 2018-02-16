@@ -45,6 +45,9 @@ void gvINT_init(void)
     /* Configure INT1 (flywheel #2 feedback) as bidirectional (ISC1 1:0 = 01) */
     MCUCR |= 0u << ISC01;
     MCUCR |= 1u << ISC00;
+
+    /* Start with interrupts disabled */
+    gvINT_disableFlywheel();
 }
 
 /**
