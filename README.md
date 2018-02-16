@@ -4,9 +4,8 @@ Guarantee this won't be useful to you if you've just stumbled upon this page.
 This is part of a small project involving a nerf gun.
 I took it as an excuse to try and write a simple task scheduler with limited resources.
 
-Currently the code was only tested on Windows using MinGW.  The printf() statements
-and my timer setup under the HAL will need to be abstracted away or conditionally compiled
-out for the actual implementation.
+The code has currently only been tested in a simulated environment using Atmel studio.
+The basics, however, seem to be working fine.
 
 Project structure:
 
