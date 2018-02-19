@@ -21,12 +21,8 @@
 
 /* Prototypes */
 void gvPush_process(uint16_t uwCallRateMs);
-void gvPush_setCmd(push_motor_state_t eCmd);
 
 /* Local Variables */
-
-/* Commanded state */
-static push_motor_state_t xeCommandedState = PUSH_STATE_WAIT;
 
 /**
  *  void gvPush_process(uint16_t uwCallRateMs)
@@ -143,23 +139,4 @@ void gvPush_process(uint16_t uwCallRateMs)
             seState = PUSH_STATE_INIT;
             break;
     }
-}
-
-/**
- *  void gvPush_setCmd(push_motor_state_t eCmd)
- *
- *  Description:
- *      Updates the commanded state of the push motor.
- *
- *  Parameters:
- *      eCmd = Commanded state
- *
- *  Returns:
- *      N/A
- *
- */
-void gvPush_setCmd(push_motor_state_t eCmd)
-{
-    /* Set the command */
-    xeCommandedState = eCmd;
 }

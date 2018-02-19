@@ -32,6 +32,5 @@ typedef enum push_motor_state
 
 /* Global Functions */
 extern void gvPush_process(uint16_t uwCallRateMs);
-extern void gvPush_setCmd(push_motor_state_t eCmd);
 
 #endif /* #ifndef PUSH_MOTOR_H */
