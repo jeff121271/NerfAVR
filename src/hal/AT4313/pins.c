@@ -41,6 +41,7 @@
 /* Prototypes */
 void gvPins_init(void);
 static void vPins_configAll(void);
+static void vPins_update(pin_index_t ePinIdx);
 void gvPins_updateAll(void);
 void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic);
 void gvPins_toggle(pin_index_t ePinIdx);
@@ -232,6 +233,90 @@ static void vPins_configAll(void)
 }
 
 /**
+ *  static void vPins_update(pin_index_t ePinIdx)
+ *
+ *  Description:
+ *      Updates the status of a single pin.
+ *
+ *  Parameters:
+ *      ePinIdx = Index of the pin to update
+ *
+ *  Returns:
+ *      N/A
+ *
+ */
+static void vPins_update(pin_index_t ePinIdx)
+{
+    /* Process output pin */
+    if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
+    {
+        /* Select the appropriate port */
+        switch (digitalPins[ePinIdx].portSel)
+        {
+            case PIN_SELECT_PORTA:
+                if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
+                {
+                    PORTA &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
+                }
+                else
+                {
+                    PORTA |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+                }
+                break;
+
+            case PIN_SELECT_PORTB:
+                if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
+                {
+                    PORTB &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
+                }
+                else
+                {
+                    PORTB |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+                }
+                break;
+
+            case PIN_SELECT_PORTD:
+                if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
+                {
+                    PORTD &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
+                }
+                else
+                {
+                    PORTD |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
+                }
+                break;
+
+            default:
+                /* Do nothing */
+                break;
+        }
+    }
+    /* Process input pin */
+    else
+    {
+        /* Select appropriate port */
+        switch (digitalPins[ePinIdx].portSel)
+        {
+            case PIN_SELECT_PORTA:
+                digitalPins[ePinIdx].logicLevel = ((PINA & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
+                break;
+
+            case PIN_SELECT_PORTB:
+                digitalPins[ePinIdx].logicLevel = ((PINB & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
+                break;
+
+            case PIN_SELECT_PORTD:
+                digitalPins[ePinIdx].logicLevel = ((PIND & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
+                break;
+
+            default:
+                /* Do nothing */
+                break;
+        }
+    }
+}
+
+/**
  *    void gvPins_updateAll(void)
  *
  *    Description:
@@ -252,73 +337,8 @@ void gvPins_updateAll(void)
     /* Loop over each pin object */
     for ( ePinIdx = (pin_index_t)0u; ePinIdx < PIN_COUNT; ePinIdx++ )
     {
-        /* Process output pin */
-        if ( PIN_DIRECTION_OUTPUT == digitalPins[ePinIdx].direction )
-        {
-            /* Select the appropriate port */
-            switch (digitalPins[ePinIdx].portSel)
-            {
-                case PIN_SELECT_PORTA:
-                    if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
-                    {
-                        PORTA &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
-                    }
-                    else
-                    {
-                        PORTA |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
-                    }
-                    break;
-
-                case PIN_SELECT_PORTB:
-                    if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
-                    {
-                        PORTB &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
-                    }
-                    else
-                    {
-                        PORTB |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
-                    }
-                    break;
-
-                case PIN_SELECT_PORTD:
-                    if ( PIN_LOGIC_LOW == digitalPins[ePinIdx].logicLevel )
-                    {
-                        PORTD &= (uint8_t)(~(1 << digitalPins[ePinIdx].pinNum));
-                    }
-                    else
-                    {
-                        PORTD |= (digitalPins[ePinIdx].logicLevel << digitalPins[ePinIdx].pinNum);
-                    }
-                    break;
-
-                default:
-                    /* Do nothing */
-                    break;
-            }
-        }
-        /* Process input pin */
-        else
-        {
-            /* Select appropriate port */
-            switch (digitalPins[ePinIdx].portSel)
-            {
-                case PIN_SELECT_PORTA:
-                    digitalPins[ePinIdx].logicLevel = ((PINA & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
-                    break;
-
-                case PIN_SELECT_PORTB:
-                    digitalPins[ePinIdx].logicLevel = ((PINB & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
-                    break;
-
-                case PIN_SELECT_PORTD:
-                    digitalPins[ePinIdx].logicLevel = ((PIND & (1u << digitalPins[ePinIdx].pinNum)) > 0) ? PIN_LOGIC_HIGH : PIN_LOGIC_LOW;
-                    break;
-
-                default:
-                    /* Do nothing */
-                    break;
-            }
-        }
+        /* Update the pin */
+        vPins_update(ePinIdx);
     }
 }
 
@@ -346,6 +366,9 @@ void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic)
         {
             /* Set pin level */
             digitalPins[ePinIdx].logicLevel = ubLogic;
+
+            /* Update pin */
+            vPins_update(ePinIdx);
         }
     }
 }
@@ -427,6 +450,9 @@ uint8_t gubPins_read(pin_index_t ePinIdx)
         /* Validate pin is in input mode */
         if ( PIN_DIRECTION_INPUT == digitalPins[ePinIdx].direction )
         {
+            /* Update pin */
+            vPins_update(ePinIdx);
+
             /* Read pin level */
             ubLevel = digitalPins[ePinIdx].logicLevel;
         }
