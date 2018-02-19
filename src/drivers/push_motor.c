@@ -122,7 +122,7 @@ void gvPush_process(uint16_t uwCallRateMs)
             break;
 
         case PUSH_STATE_RETRACT:
-            /* Check for photosensor clear or timeout */
+            /* Check for photosensor block or timeout */
             if ( (PIN_LOGIC_LOW == gubPins_read(PIN_PUSH_RETRACTED)) ||
                  (suwTimerMs >= PUSH_OPERATION_TIMEOUT_MS) )
             {
