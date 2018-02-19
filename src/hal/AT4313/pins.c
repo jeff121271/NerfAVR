@@ -1,10 +1,10 @@
 /**
- *    pins.c
+ *  pins.c
  *
- *    Handles logic for interacting with digital I/O pins.
+ *  Handles logic for interacting with digital I/O pins.
  *
- *    Jeff Campbell
- *    2/13/18
+ *  Jeff Campbell
+ *  2/13/18
  *
  */
 
@@ -53,16 +53,16 @@ uint8_t gubPins_read(pin_index_t ePinIdx);
 static pin_desc_t digitalPins[PIN_COUNT];
 
 /**
- *    void gvPins_init(void)
+ *  void gvPins_init(void)
  *
- *    Description:
- *        Initializes digital pin configurations.
+ *  Description:
+ *      Initializes digital pin configurations.
  *
- *    Parameters:
- *        N/A
+ *  Parameters:
+ *      N/A
  *
- *    Returns:
- *        N/A
+ *  Returns:
+ *      N/A
  *
  */
 void gvPins_init(void)
@@ -152,16 +152,16 @@ void gvPins_init(void)
 }
 
 /**
- *    static void vPins_configAll(void)
+ *  static void vPins_configAll(void)
  *
- *    Description:
- *        Configures all the pins' registers.
+ *  Description:
+ *      Configures all the pins' registers.
  *
- *    Parameters:
- *        N/A
+ *  Parameters:
+ *      N/A
  *
- *    Returns:
- *        N/A
+ *  Returns:
+ *      N/A
  *
  */
 static void vPins_configAll(void)
@@ -317,17 +317,17 @@ static void vPins_update(pin_index_t ePinIdx)
 }
 
 /**
- *    void gvPins_updateAll(void)
+ *  void gvPins_updateAll(void)
  *
- *    Description:
- *        Updates the status of the pins.  Pushes all output pins to the Port
- *        registers and reads all input pins from the ports.
+ *  Description:
+ *      Updates the status of the pins.  Pushes all output pins to the Port
+ *      registers and reads all input pins from the ports.
  *
- *    Parameters:
- *        N/A
+ *  Parameters:
+ *      N/A
  *
- *    Returns:
- *        N/A
+ *  Returns:
+ *      N/A
  *
  */
 void gvPins_updateAll(void)
@@ -343,17 +343,17 @@ void gvPins_updateAll(void)
 }
 
 /**
- *    void gvPins_control(pin_index_t, uint8_t ubLogic)
+ *  void gvPins_control(pin_index_t, uint8_t ubLogic)
  *
- *    Description:
- *        Sets the logic level of the selected pin.
+ *  Description:
+ *      Sets the logic level of the selected pin.
  *
- *    Parameters:
- *        ePinIdx = Index of pin to change
- *        ubLogic = Logic level to use
+ *  Parameters:
+ *      ePinIdx = Index of pin to change
+ *      ubLogic = Logic level to use
  *
- *    Returns:
- *        N/A
+ *  Returns:
+ *      N/A
  *
  */
 void gvPins_control(pin_index_t ePinIdx, uint8_t ubLogic)
