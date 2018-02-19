@@ -28,9 +28,6 @@ void gvFlywheel_intHandler(uint8_t ubSelect);
 
 /* Local Variables */
 
-/* Desired flywheel speed (in RPM) */
-static uint16_t xuwDesiredSpeed = 0u;
-
 /* Desired flywheel speed (in PWM command) */
 static uint8_t xubPwmCmd = 0u;
 
@@ -97,16 +94,8 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             gvPWM_setCmd1(xubPwmCmd);
             gvPWM_setCmd2(xubPwmCmd);
 
-            /* Check for speed calculation */
-            if ( suwCalculationTimerMs >= FLYWHEEL_CALCULATION_TIME_MS )
-            {
-                /* Clear calculation timer */
-                suwCalculationTimerMs = 0u;
-
-                /* Update speeds */
-                xuwWheel1Speed = xuwWheel1Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
-                xuwWheel2Speed = xuwWheel2Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
-            }
+            /* Enable interrupts */
+            gvINT_enableFlywheel();
             break;
 
         case FLY_STATE_MAINTAIN:
@@ -162,19 +151,8 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             break;
 
         case FLY_STATE_RAMP_UP:
-            /* If trigger is released, go to idle */
-            if ( PIN_LOGIC_LOW == gubPins_read(PIN_WHEEL_CMD) )
-            {
-                seState = FLY_STATE_IDLE;
-            }
-            else
-            {
-                /* Otherwise, check if master is at speed */
-                if ( 1u ) // TODO: The math here
-                {
-                    seState = FLY_STATE_MAINTAIN;
-                }
-            }
+            /* Proceed immediately to speed maintenance state */
+            seState = FLY_STATE_MAINTAIN;
             break;
 
         case FLY_STATE_MAINTAIN:
