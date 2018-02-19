@@ -15,6 +15,9 @@
 
 /* Defines */
 
+/* Time to wait between shots if trigger is held */
+#define PUSH_COOLDOWN_MS 500u
+
 /* Timeout, in ms, of a push extend or retract */
 #define PUSH_OPERATION_TIMEOUT_MS 1000u
 

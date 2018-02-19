@@ -58,7 +58,7 @@ typedef enum pin_index
 {
     PIN_HEARTBEAT = 0,      /* Heartbeat pin */
     PIN_DART_CHAMBER,       /* Dart-in-chamber sensor */
-    PIN_PUSH_EXTEND,        /* Push motor extended sensor */
+    PIN_PUSH_RETRACTED,     /* Push motor extended sensor */
     PIN_PUSH_CMD_1,         /* Push motor command #1 */
     PIN_PUSH_CMD_2,         /* Push motor command #2 */
     PIN_FLYWHEEL_PWM_1,     /* Flywheel PWM #1 */

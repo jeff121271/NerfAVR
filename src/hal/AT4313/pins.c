@@ -13,7 +13,7 @@
  *  Pin     Port    Alt. Function   Description
  *  1       PA2     ---             Heartbeat pin
  *  2       PD0     ---             Dart-in-chamber photosensor
- *  3       PD1     ---             Push motor extended photosensor
+ *  3       PD1     ---             Push motor retracted photosensor
  *  4       PA1     ---             Push motor command #1
  *  5       PA0     ---             Push motor command #2
  *  6       PD2     INT0            Flywheel #1 feedback
@@ -80,12 +80,12 @@ void gvPins_init(void)
     digitalPins[PIN_DART_CHAMBER].pullupEnable  = PIN_PULLUP_ENABLE;
     digitalPins[PIN_DART_CHAMBER].pinNum        = 0u;
 
-    /* Push motor extended sensor (PD1) */
-    digitalPins[PIN_PUSH_EXTEND].logicLevel     = PIN_LOGIC_HIGH;
-    digitalPins[PIN_PUSH_EXTEND].direction      = PIN_DIRECTION_INPUT;
-    digitalPins[PIN_PUSH_EXTEND].portSel        = PIN_SELECT_PORTD;
-    digitalPins[PIN_PUSH_EXTEND].pullupEnable   = PIN_PULLUP_ENABLE;
-    digitalPins[PIN_PUSH_EXTEND].pinNum         = 1u;
+    /* Push motor retracted sensor (PD1) */
+    digitalPins[PIN_PUSH_RETRACTED].logicLevel      = PIN_LOGIC_HIGH;
+    digitalPins[PIN_PUSH_RETRACTED].direction       = PIN_DIRECTION_INPUT;
+    digitalPins[PIN_PUSH_RETRACTED].portSel         = PIN_SELECT_PORTD;
+    digitalPins[PIN_PUSH_RETRACTED].pullupEnable    = PIN_PULLUP_ENABLE;
+    digitalPins[PIN_PUSH_RETRACTED].pinNum          = 1u;
 
     /* Push motor command #1 (PA1) */
     digitalPins[PIN_PUSH_CMD_1].logicLevel      = PIN_LOGIC_LOW;

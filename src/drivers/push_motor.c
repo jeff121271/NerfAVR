@@ -46,6 +46,7 @@ void gvPush_process(uint16_t uwCallRateMs)
 {
     static push_motor_state_t seState = PUSH_STATE_INIT;
     static uint16_t suwTimerMs = 0u;
+    static uint16_t suwCooldownTimerMs = 0u;
 
     /* Increment timer */
     suwTimerMs += uwCallRateMs;
@@ -63,6 +64,9 @@ void gvPush_process(uint16_t uwCallRateMs)
 
             /* Clear timer */
             suwTimerMs = 0u;
+
+            /* Increment cooldown timer */
+            suwCooldownTimerMs += uwCallRateMs;
             break;
 
         case PUSH_STATE_EXTEND:
@@ -101,29 +105,36 @@ void gvPush_process(uint16_t uwCallRateMs)
                 /* Check that the flywheels are ready */
                 if ( true == gfFlywheel_engaged() )
                 {
-                    /* Move to extend state */
-                    seState = PUSH_STATE_EXTEND;
+                    /* Check if cooldown period has expired */
+                    if ( suwCooldownTimerMs >= PUSH_COOLDOWN_MS )
+                    {
+                        /* Move to extend state */
+                        seState = PUSH_STATE_EXTEND;
+                    }
                 }
             }
             break;
 
         case PUSH_STATE_EXTEND:
-            /* Check for photosensor block or timeout */
-            if ( (PIN_LOGIC_LOW == gubPins_read(PIN_PUSH_EXTEND)) ||
+            /* Move to retract state if photosensor has cleared or the push timed out */
+            if ( (PIN_LOGIC_HIGH == gubPins_read(PIN_PUSH_RETRACTED)) ||
                  (suwTimerMs >= PUSH_OPERATION_TIMEOUT_MS) )
             {
                 /* Return to wait state */
-                seState = PUSH_STATE_WAIT;
+                seState = PUSH_STATE_RETRACT;
             }
             break;
 
         case PUSH_STATE_RETRACT:
             /* Check for photosensor clear or timeout */
-            if ( (PIN_LOGIC_HIGH == gubPins_read(PIN_PUSH_EXTEND)) ||
+            if ( (PIN_LOGIC_LOW == gubPins_read(PIN_PUSH_RETRACTED)) ||
                  (suwTimerMs >= PUSH_OPERATION_TIMEOUT_MS) )
             {
                 /* Return to wait state */
                 seState = PUSH_STATE_WAIT;
+
+                /* Reset cooldown timer */
+                suwCooldownTimerMs = 0u;
             }
             break;
 
