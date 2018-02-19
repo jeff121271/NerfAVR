@@ -153,7 +153,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_IDLE:
             /* If trigger is pressed, ramp up */
-            if ( PIN_LOGIC_HIGH == gubPins_read(PIN_WHEEL_CMD) )
+            if ( PIN_LOGIC_HIGH == gubPins_read(PIN_TRIGGER) )
             {
                 xeState = FLY_STATE_RAMP_UP;
             }
@@ -166,7 +166,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_MAINTAIN:
             /* Only exit when trigger is released */
-            if ( PIN_LOGIC_LOW == gubPins_read(PIN_WHEEL_CMD) )
+            if ( PIN_LOGIC_LOW == gubPins_read(PIN_TRIGGER) )
             {
                 xeState = FLY_STATE_IDLE;
             }
