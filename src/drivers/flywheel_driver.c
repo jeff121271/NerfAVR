@@ -17,6 +17,7 @@
 
 /* Includes */
 #include <stdint.h>
+#include <stdbool.h>
 #include "pins.h"
 #include "pwm.h"
 #include "interrupt.h"
@@ -25,6 +26,7 @@
 /* Prototypes */
 void gvFlywheel_process(uint16_t uwCallRateMs);
 void gvFlywheel_intHandler(uint8_t ubSelect);
+bool gfFlywheel_engaged(void);
 
 /* Local Variables */
 
@@ -37,11 +39,14 @@ static volatile uint16_t xuwWheel1Counts = 0u;
 /* Raw quadrature counts from flywheel #2 */
 static volatile uint16_t xuwWheel2Counts = 0u;
 
-/* Flywheel #1 speed */
+/* Flywheel #1 speed (RPM) */
 static uint16_t xuwWheel1Speed = 0u;
 
-/* Flywheel #2 speed */
+/* Flywheel #2 speed (RPM) */
 static uint16_t xuwWheel2Speed = 0u;
+
+/* State of the flywheel state machine */
+static flywheel_states_t xeState = FLY_STATE_INIT;
 
 /**
  *  void gvFlywheel_process(uint16_t uwCallRateMs)
@@ -58,7 +63,6 @@ static uint16_t xuwWheel2Speed = 0u;
  */
 void gvFlywheel_process(uint16_t uwCallRateMs)
 {
-    static flywheel_states_t seState = FLY_STATE_INIT;
     static uint16_t suwTimerMs = 0u;
     static uint16_t suwCalculationTimerMs = 0u;
 
@@ -67,7 +71,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
     suwCalculationTimerMs += uwCallRateMs;
 
     /* Process state actions */
-    switch (seState)
+    switch (xeState)
     {
         case FLY_STATE_INIT:
             /* Do nothing */
@@ -135,31 +139,31 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
     }
 
     /* Process state transitions */
-    switch (seState)
+    switch (xeState)
     {
         case FLY_STATE_INIT:
             /* Go to idle state */
-            seState = FLY_STATE_IDLE;
+            xeState = FLY_STATE_IDLE;
             break;
 
         case FLY_STATE_IDLE:
             /* If trigger is pressed, ramp up */
             if ( PIN_LOGIC_HIGH == gubPins_read(PIN_WHEEL_CMD) )
             {
-                seState = FLY_STATE_RAMP_UP;
+                xeState = FLY_STATE_RAMP_UP;
             }
             break;
 
         case FLY_STATE_RAMP_UP:
             /* Proceed immediately to speed maintenance state */
-            seState = FLY_STATE_MAINTAIN;
+            xeState = FLY_STATE_MAINTAIN;
             break;
 
         case FLY_STATE_MAINTAIN:
             /* Only exit when trigger is released */
             if ( PIN_LOGIC_LOW == gubPins_read(PIN_WHEEL_CMD) )
             {
-                seState = FLY_STATE_IDLE;
+                xeState = FLY_STATE_IDLE;
             }
             break;
 
@@ -193,4 +197,22 @@ void gvFlywheel_intHandler(uint8_t ubSelect)
     {
         xuwWheel2Counts++;
     }
+}
+
+/**
+ *  bool gfFlywheel_engaged(void)
+ *
+ *  Description:
+ *      Determines if the flywheels are ready to fire a dart.
+ *
+ *  Parameters:
+ *      N/A
+ *
+ *  Returns:
+ *      true if flywheels are ready; false otherwise.
+ */
+bool gfFlywheel_engaged(void)
+{
+    /* Only return true if flywheel is in the maintain speed state */
+    return (FLY_STATE_MAINTAIN == xeState) ? true : false;
 }

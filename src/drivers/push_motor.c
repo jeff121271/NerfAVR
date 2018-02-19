@@ -16,6 +16,7 @@
 /* Includes */
 #include <stdint.h>
 #include "pins.h"
+#include "flywheel_driver.h"
 #include "push_motor.h"
 
 /* Prototypes */
@@ -95,9 +96,14 @@ void gvPush_process(uint16_t uwCallRateMs)
 
         case PUSH_STATE_WAIT:
             /* Check for command */
-            if ( xeCommandedState > PUSH_STATE_WAIT )
+            if ( PIN_LOGIC_HIGH == gubPins_read(PIN_TRIGGER) )
             {
-                seState = xeCommandedState;
+                /* Check that the flywheels are ready */
+                if ( true == gfFlywheel_engaged() )
+                {
+                    /* Move to extend state */
+                    seState = PUSH_STATE_EXTEND;
+                }
             }
             break;
 

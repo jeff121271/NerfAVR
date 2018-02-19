@@ -6,12 +6,14 @@
  *  Jeff Campbell
  *  2/15/18
  *
- */ 
+ */
 
 #ifndef FLYWHEEL_DRIVER_H
 #define FLYWHEEL_DRIVER_H
 
 /* Includes */
+#include <stdint.h>
+#include <stdbool.h>
 
 /* Defines */
 
@@ -39,5 +41,6 @@ typedef enum flywheel_states
 /* Global Functions */
 extern void gvFlywheel_process(uint16_t uwCallRateMs);
 extern void gvFlywheel_intHandler(uint8_t ubSelect);
+extern bool gfFlywheel_engaged(void);
 
 #endif /* #ifndef FLYWHEEL_DRIVER_H */
