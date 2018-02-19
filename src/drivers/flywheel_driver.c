@@ -7,8 +7,18 @@
  *
  *      Assuming 4 counts per revolution.
  *
- *      Speed (RPM) = Counts * (Calc. Interval) * 60 / 4000
+ *      Estimate for number of encoder counts to expect in a sampling period:
+ *          Counts = v * T / 15,000, where:
+ *              v = Motor speed (RPM)
+ *              T = Calculation interval (ms)
  *
+ *      Conversion from encoder counts to calculated motor speed:
+ *          Speed = 15,000 * c / T, where:
+ *              c = Number of encoder counts
+ *              T = Calculation interval (ms)
+ *
+ *
+ *  Motors will achieve speeds on the order of 10,000 RPM.
  *
  *  Jeff Campbell
  *  2/15/18
@@ -64,11 +74,9 @@ static flywheel_states_t xeState = FLY_STATE_INIT;
 void gvFlywheel_process(uint16_t uwCallRateMs)
 {
     static uint16_t suwTimerMs = 0u;
-    static uint16_t suwCalculationTimerMs = 0u;
 
     /* Increment timers */
     suwTimerMs += uwCallRateMs;
-    suwCalculationTimerMs += uwCallRateMs;
 
     /* Process state actions */
     switch (xeState)
@@ -104,7 +112,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
         case FLY_STATE_MAINTAIN:
             /* Check if it's time to adjust the flywheel */
-            if ( suwTimerMs > FLYWHEEL_ADJUST_TIME_MS)
+            if ( suwTimerMs > FLYWHEEL_CALCULATION_TIME_MS)
             {
                 /* Increase slave command if it is slower */
                 if ( xuwWheel1Counts > xuwWheel2Counts )
@@ -117,19 +125,16 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
                     gvPWM_decrement();
                 }
 
+                /* Update calculated speeds (cast to uint32_t to avoid overflow) */
+                xuwWheel1Speed = (uint16_t)(((uint32_t)15000u) * xuwWheel1Counts / FLYWHEEL_CALCULATION_TIME_MS);
+                xuwWheel2Speed = (uint16_t)(((uint32_t)15000u) * xuwWheel2Counts / FLYWHEEL_CALCULATION_TIME_MS);
+
+                /* Clear encoder counters */
+                xuwWheel1Counts = 0u;
+                xuwWheel2Counts = 0u;
+
                 /* Clear timer */
                 suwTimerMs = 0u;
-            }
-
-            /* Check for speed calculation */
-            if ( suwCalculationTimerMs >= FLYWHEEL_CALCULATION_TIME_MS )
-            {
-                /* Clear calculation timer */
-                suwCalculationTimerMs = 0u;
-
-                /* Update speeds */
-                xuwWheel1Speed = xuwWheel1Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
-                xuwWheel2Speed = xuwWheel2Counts * FLYWHEEL_CALCULATION_TIME_MS * 3u / 200u;
             }
             break;
 
@@ -175,7 +180,7 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 /**
  *  void gvFlywheel_intHandler(uint8_t ubSelect)
  *
- *  Descripton:
+ *  Description:
  *      Interrupt handler for a flywheel encoder.  Increments
  *      the appropriate encoder counter.
  *
