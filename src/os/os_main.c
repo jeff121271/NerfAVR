@@ -114,13 +114,13 @@ static void vOS_initTasks(void)
     xTaskPool[OS_TASK_DISPLAY].pvStepFunction = &gvDisplay_process;
 
     /* Configure pin update task */
-    xTaskPool[OS_TASK_PIN_UPDATE].uwRateMs = 5u;
+    xTaskPool[OS_TASK_PIN_UPDATE].uwRateMs = 50u;
     xTaskPool[OS_TASK_PIN_UPDATE].uwTicks = 2u;
     xTaskPool[OS_TASK_PIN_UPDATE].pvInitFunction = NULL_PTR;
     xTaskPool[OS_TASK_PIN_UPDATE].pvStepFunction = &gvTasks_pinUpdate;
 
     /* Configure push motor state machine task */
-    xTaskPool[OS_TASK_PUSH_MOTOR].uwRateMs = 10u;
+    xTaskPool[OS_TASK_PUSH_MOTOR].uwRateMs = 5u;
     xTaskPool[OS_TASK_PUSH_MOTOR].uwTicks = 3u;
     xTaskPool[OS_TASK_PUSH_MOTOR].pvInitFunction = NULL_PTR;
     xTaskPool[OS_TASK_PUSH_MOTOR].pvStepFunction = &gvPush_process;
