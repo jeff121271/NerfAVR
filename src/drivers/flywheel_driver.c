@@ -30,6 +30,7 @@
 #include <stdbool.h>
 #include "pins.h"
 #include "pwm.h"
+#include "pid.h"
 #include "interrupt.h"
 #include "flywheel_driver.h"
 
@@ -75,6 +76,10 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 {
     static uint16_t suwTimerMs = 0u;
 
+  #ifdef PID_ENABLE
+    static int16_t swPreviousError = 0;
+  #endif /* #ifdef PID_ENABLE */
+
     /* Increment timers */
     suwTimerMs += uwCallRateMs;
 
@@ -111,20 +116,10 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
             break;
 
         case FLY_STATE_MAINTAIN:
+            /* Pick control method based on precompiler definitions */
             /* Check if it's time to adjust the flywheel */
             if ( suwTimerMs > FLYWHEEL_CALCULATION_TIME_MS)
             {
-                /* Increase slave command if it is slower */
-                if ( xuwWheel1Counts > xuwWheel2Counts )
-                {
-                    gvPWM_increment();
-                }
-                /* Otherwise, decrement it */
-                else
-                {
-                    gvPWM_decrement();
-                }
-
                 /* Update calculated speeds (cast to uint32_t to avoid overflow) */
                 xuwWheel1Speed = (uint16_t)(((uint32_t)15000u) * xuwWheel1Counts / FLYWHEEL_CALCULATION_TIME_MS);
                 xuwWheel2Speed = (uint16_t)(((uint32_t)15000u) * xuwWheel2Counts / FLYWHEEL_CALCULATION_TIME_MS);
@@ -135,6 +130,23 @@ void gvFlywheel_process(uint16_t uwCallRateMs)
 
                 /* Clear timer */
                 suwTimerMs = 0u;
+
+          #ifdef PID_ENABLE
+                /* Calculate current output of PID loop */
+                gswPID_process((int16_t)xuwWheel2Speed, (int16_t)xuwWheel1Speed, (int16_t *)&swPreviousError,
+                                FLYWHEEL_PID_P, FLYWHEEL_PID_I, FLYWHEEL_PID_D, FLYWHEEL_CALCULATION_TIME_MS);
+          #else
+                /* Increase slave command if it is slower */
+                if ( xuwWheel1Counts > xuwWheel2Counts )
+                {
+                    gvPWM_increment();
+                }
+                /* Otherwise, decrement it */
+                else
+                {
+                    gvPWM_decrement();
+                }
+          #endif /* #ifdef PID_ENABLE */
             }
             break;
 

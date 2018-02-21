@@ -17,6 +17,15 @@
 
 /* Defines */
 
+/* Proportional gain of flywheel PID */
+#define FLYWHEEL_PID_P 10u
+
+/* Integral gain of flywheel PID */
+#define FLYWHEEL_PID_I 5u
+
+/* Differential gain of flywheel PID */
+#define FLYWHEEL_PID_D 1u
+
 /* Value to select flywheel #1 */
 #define FLYWHEEL_SELECT_1 1u
 

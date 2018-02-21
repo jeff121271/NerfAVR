@@ -18,7 +18,7 @@
 /* Defines */
 
 /* Global Functions */
-int16_t gswPID_process(int16_t swCurrent, int16_t swDesired, int16_t swP, int16_t swI, int16_t swD, uint16_t uwCallRateMs);
+extern int16_t gswPID_process(int16_t swCurrent, int16_t swDesired, int16_t *pswPreviousError, int16_t swP, int16_t swI, int16_t swD, uint16_t uwCallRateMs);
 
 #endif /* #ifdef PID_ENABLE */
 #endif /* #ifndef PID_H */
