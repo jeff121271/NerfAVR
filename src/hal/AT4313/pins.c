@@ -14,23 +14,23 @@
  *  1       PA2     ---             Heartbeat pin
  *  2       PD0     ---             Dart-in-chamber photosensor
  *  3       PD1     ---             Push motor retracted photosensor
- *  4       PA1     ---             Push motor command #1
- *  5       PA0     ---             Push motor command #2
- *  6       PD2     INT0            Flywheel #1 feedback
- *  7       PD3     INT1            Flywheel #2 feedback
+ *  4       PA1     ---             Push motor command #1 (Phase)
+ *  5       PA0     ---             Push motor command #2 (Enable)
+ *  6       PD2     INT0            Flywheel #1 feedback (top motor)
+ *  7       PD3     INT1            Flywheel #2 feedback (bottom motor)
  *  8       PD4     ---             Trigger
- *  9       PD5     OC0B            Flywheel PWM #2
- * 10       GND     ---             Ground
- * 11       PD6
- * 12       PB0     ---             TM1637 Data pin
- * 13       PB1     ---             TM1637 Clock pin
- * 14       PB2     OC0A            Flywheel PWM #1
- * 15       PB3
- * 16       PB4
- * 17       PB5
- * 18       PB6
- * 19       PB7
- * 20       VCC     ---             Power supply
+ *  9       PD5     OC0B            Flywheel PWM #2 (bottom motor)
+ *  10      GND     ---             Ground
+ *  11      PD6
+ *  12      PB0     ---             TM1637 Data pin
+ *  13      PB1     ---             TM1637 Clock pin
+ *  14      PB2     OC0A            Flywheel PWM #1 (top motor)
+ *  15      PB3
+ *  16      PB4
+ *  17      PB5
+ *  18      PB6
+ *  19      PB7
+ *  20      VCC     ---             Power supply
  *
  */
 
