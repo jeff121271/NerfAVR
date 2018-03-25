@@ -11,7 +11,7 @@
 /*
  *          Pin Assignments
  *  Pin     Port    Alt. Function   Description
- *  1       PA2     ---             Heartbeat pin
+ *  1       PA2     ---
  *  2       PD0     ---             Dart-in-chamber photosensor
  *  3       PD1     ---             Push motor retracted photosensor
  *  4       PA1     ---             Push motor command #1 (Phase)
@@ -26,7 +26,7 @@
  *  13      PB1     ---             TM1637 Clock pin
  *  14      PB2     OC0A            Flywheel PWM #1 (top motor)
  *  15      PB3
- *  16      PB4
+ *  16      PB4     ---             Heartbeat pin
  *  17      PB5
  *  18      PB6
  *  19      PB7
@@ -67,12 +67,12 @@ static pin_desc_t digitalPins[PIN_COUNT];
  */
 void gvPins_init(void)
 {
-    /* Heartbeat pin (PA2) */
+    /* Heartbeat pin (PB4) */
     digitalPins[PIN_HEARTBEAT].logicLevel       = PIN_LOGIC_LOW;
     digitalPins[PIN_HEARTBEAT].direction        = PIN_DIRECTION_OUTPUT;
-    digitalPins[PIN_HEARTBEAT].portSel          = PIN_SELECT_PORTA;
+    digitalPins[PIN_HEARTBEAT].portSel          = PIN_SELECT_PORTB;
     digitalPins[PIN_HEARTBEAT].pullupEnable     = PIN_PULLUP_DISABLE;
-    digitalPins[PIN_HEARTBEAT].pinNum           = 2u;
+    digitalPins[PIN_HEARTBEAT].pinNum           = 4u;
 
     /* Dart in chamber sensor (PD0) */
     digitalPins[PIN_DART_CHAMBER].logicLevel    = PIN_LOGIC_HIGH;
